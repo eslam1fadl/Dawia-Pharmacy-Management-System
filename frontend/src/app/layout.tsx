@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ar" dir="rtl" className={`${tajawal.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col bg-[#F5F8F7] text-[#172B24]">{children}</body>
+      <body className="min-h-full flex flex-col bg-[#F1F5F9] text-[#173B67]">{children}</body>
     </html>
   );
 }

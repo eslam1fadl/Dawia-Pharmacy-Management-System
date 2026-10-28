@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState, useTransition } from "react";
 import {
@@ -141,7 +141,7 @@ export default function MedicinesPage() {
           canManage && (
             <button
               onClick={() => setIsAddModalOpen(true)}
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#087F68] hover:bg-[#066653] text-white text-sm font-semibold transition-all shadow-sm border-none cursor-pointer"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-sm font-semibold transition-all shadow-sm border-none cursor-pointer"
             >
               <Plus size={18} />
               <span>إضافة دواء جديد</span>
@@ -151,7 +151,7 @@ export default function MedicinesPage() {
       />
 
       {/* Filter and Search Bar */}
-      <div className="bg-white p-4 rounded-2xl border border-[#DCE6E1] shadow-sm flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between">
+      <div className="bg-white p-4 rounded-2xl border border-[#CBD5E1] shadow-sm flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between">
         <form onSubmit={handleSearchSubmit} className="flex-1 relative flex items-center">
           <Search size={18} className="absolute right-3.5 text-[#64748B]" />
           <input
@@ -159,11 +159,11 @@ export default function MedicinesPage() {
             placeholder="ابحث بالاسم، الاسم العلمي، المادة الفعالة، الباركود، أو الكود..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full py-2.5 pr-10 pl-24 rounded-xl border border-[#DCE6E1] text-sm text-[#172B24] placeholder:text-[#64748B]/60 focus:border-[#20C997] focus:ring-2 focus:ring-[#20C997]/20 outline-none"
+            className="w-full py-2.5 pr-10 pl-24 rounded-xl border border-[#CBD5E1] text-sm text-[#173B67] placeholder:text-[#64748B]/60 focus:border-[#3B82F6] focus:ring-2 focus:ring-[#3B82F6]/20 outline-none"
           />
           <button
             type="submit"
-            className="absolute left-2 px-3 py-1.5 rounded-lg bg-[#F5F8F7] hover:bg-[#087F68] hover:text-white text-xs font-semibold text-[#064E49] transition-colors border border-[#DCE6E1] cursor-pointer"
+            className="absolute left-2 px-3 py-1.5 rounded-lg bg-[#F1F5F9] hover:bg-[#2563EB] hover:text-white text-xs font-semibold text-[#173B67] transition-colors border border-[#CBD5E1] cursor-pointer"
           >
             بحث
           </button>
@@ -178,7 +178,7 @@ export default function MedicinesPage() {
                 setSelectedCategory(e.target.value ? Number(e.target.value) : undefined);
                 setPage(1);
               }}
-              className="w-full appearance-none py-2.5 pr-8 pl-8 rounded-xl border border-[#DCE6E1] text-sm text-[#172B24] bg-white focus:border-[#20C997] outline-none cursor-pointer"
+              className="w-full appearance-none py-2.5 pr-8 pl-8 rounded-xl border border-[#CBD5E1] text-sm text-[#173B67] bg-white focus:border-[#3B82F6] outline-none cursor-pointer"
             >
               <option value="">جميع التصنيفات</option>
               {categories.map((c) => (
@@ -191,7 +191,7 @@ export default function MedicinesPage() {
           </div>
 
           {/* Status Tabs */}
-          <div className="flex bg-[#F5F8F7] p-1 rounded-xl border border-[#DCE6E1] text-xs font-medium">
+          <div className="flex bg-[#F1F5F9] p-1 rounded-xl border border-[#CBD5E1] text-xs font-medium">
             <button
               type="button"
               onClick={() => {
@@ -199,7 +199,7 @@ export default function MedicinesPage() {
                 setPage(1);
               }}
               className={`px-3 py-1.5 rounded-lg border-none cursor-pointer transition-all ${
-                statusFilter === "active" ? "bg-white text-[#087F68] font-bold shadow-xs" : "text-[#64748B] hover:text-[#172B24]"
+                statusFilter === "active" ? "bg-white text-[#2563EB] font-bold shadow-xs" : "text-[#64748B] hover:text-[#173B67]"
               }`}
             >
               النشطة
@@ -211,7 +211,7 @@ export default function MedicinesPage() {
                 setPage(1);
               }}
               className={`px-3 py-1.5 rounded-lg border-none cursor-pointer transition-all ${
-                statusFilter === "archived" ? "bg-white text-[#D9636B] font-bold shadow-xs" : "text-[#64748B] hover:text-[#172B24]"
+                statusFilter === "archived" ? "bg-white text-[#D9636B] font-bold shadow-xs" : "text-[#64748B] hover:text-[#173B67]"
               }`}
             >
               المؤرشفة
@@ -223,7 +223,7 @@ export default function MedicinesPage() {
                 setPage(1);
               }}
               className={`px-3 py-1.5 rounded-lg border-none cursor-pointer transition-all ${
-                statusFilter === "all" ? "bg-white text-[#064E49] font-bold shadow-xs" : "text-[#64748B] hover:text-[#172B24]"
+                statusFilter === "all" ? "bg-white text-[#173B67] font-bold shadow-xs" : "text-[#64748B] hover:text-[#173B67]"
               }`}
             >
               الكل
@@ -241,25 +241,25 @@ export default function MedicinesPage() {
       )}
 
       {/* Medicines Table */}
-      <div className="bg-white rounded-2xl border border-[#DCE6E1] shadow-sm overflow-hidden">
+      <div className="bg-white rounded-2xl border border-[#CBD5E1] shadow-sm overflow-hidden">
         {loading ? (
           <div className="p-12 text-center text-[#64748B]">
-            <div className="w-8 h-8 border-3 border-[#087F68] border-t-transparent rounded-full animate-spin mx-auto mb-3" />
+            <div className="w-8 h-8 border-3 border-[#2563EB] border-t-transparent rounded-full animate-spin mx-auto mb-3" />
             <p className="text-sm font-medium">جاري تحميل قائمة الأدوية...</p>
           </div>
         ) : medicines.length === 0 ? (
           <div className="p-12 text-center text-[#64748B] flex flex-col items-center">
-            <div className="w-16 h-16 rounded-2xl bg-[#F5F8F7] flex items-center justify-center text-[#087F68] mb-3">
+            <div className="w-16 h-16 rounded-2xl bg-[#F1F5F9] flex items-center justify-center text-[#2563EB] mb-3">
               <Pill size={32} />
             </div>
-            <h3 className="text-[#172B24] font-bold text-base m-0 mb-1">لا توجد أدوية مطابقة للبحث</h3>
+            <h3 className="text-[#173B67] font-bold text-base m-0 mb-1">لا توجد أدوية مطابقة للبحث</h3>
             <p className="text-sm m-0 text-[#64748B] max-w-sm">
               جرب تغيير كلمات البحث أو الفلاتر، أو أضف دواء جديد إلى الصيدلية.
             </p>
             {canManage && (
               <button
                 onClick={() => setIsAddModalOpen(true)}
-                className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#087F68] text-white text-xs font-semibold hover:bg-[#066653] transition-colors border-none cursor-pointer"
+                className="mt-4 inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-[#2563EB] text-white text-xs font-semibold hover:bg-[#1D4ED8] transition-colors border-none cursor-pointer"
               >
                 <Plus size={15} />
                 <span>إضافة دواء الآن</span>
@@ -270,7 +270,7 @@ export default function MedicinesPage() {
           <div className="overflow-x-auto">
             <table className="w-full text-right border-collapse">
               <thead>
-                <tr className="border-b border-[#DCE6E1] bg-[#F5F8F7]/60 text-xs text-[#64748B] font-semibold">
+                <tr className="border-b border-[#CBD5E1] bg-[#F1F5F9]/60 text-xs text-[#64748B] font-semibold">
                   <th className="py-3.5 px-4">اسم الدواء</th>
                   <th className="py-3.5 px-4">التصنيف</th>
                   <th className="py-3.5 px-4">الباركود / الكود</th>
@@ -282,12 +282,12 @@ export default function MedicinesPage() {
                   <th className="py-3.5 px-4 text-center">الإجراءات</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#DCE6E1] text-sm">
+              <tbody className="divide-y divide-[#CBD5E1] text-sm">
                 {medicines.map((med) => (
-                  <tr key={med.id} className="hover:bg-[#F5F8F7]/40 transition-colors">
+                  <tr key={med.id} className="hover:bg-[#F1F5F9]/40 transition-colors">
                     {/* Medicine Name & Details */}
                     <td className="py-3 px-4">
-                      <div className="font-bold text-[#172B24] flex items-center gap-2">
+                      <div className="font-bold text-[#173B67] flex items-center gap-2">
                         <span>{med.name}</span>
                       </div>
                       {(med.scientificName || med.activeIngredient) && (
@@ -300,7 +300,7 @@ export default function MedicinesPage() {
                     {/* Category */}
                     <td className="py-3 px-4">
                       {med.categoryName ? (
-                        <span className="inline-block px-2.5 py-1 rounded-lg bg-[#E6F4F1] text-[#087F68] text-xs font-semibold">
+                        <span className="inline-block px-2.5 py-1 rounded-lg bg-[#EFF6FF] text-[#2563EB] text-xs font-semibold">
                           {med.categoryName}
                         </span>
                       ) : (
@@ -310,12 +310,12 @@ export default function MedicinesPage() {
 
                     {/* Barcode & SKU */}
                     <td className="py-3 px-4">
-                      <div className="font-mono text-xs text-[#172B24]">{med.barcode || "—"}</div>
+                      <div className="font-mono text-xs text-[#173B67]">{med.barcode || "—"}</div>
                       {med.sku && <div className="text-[11px] text-[#64748B] font-mono">كود: {med.sku}</div>}
                     </td>
 
                     {/* Form & Strength */}
-                    <td className="py-3 px-4 text-xs text-[#172B24]">
+                    <td className="py-3 px-4 text-xs text-[#173B67]">
                       <div>{med.dosageForm || "—"}</div>
                       {med.strength && <div className="text-[#64748B]">{med.strength}</div>}
                     </td>
@@ -326,12 +326,12 @@ export default function MedicinesPage() {
                     </td>
 
                     {/* Sale Price */}
-                    <td className="py-3 px-4 font-bold text-sm text-[#087F68]">
+                    <td className="py-3 px-4 font-bold text-sm text-[#2563EB]">
                       {formatMoney(med.salePrice)}
                     </td>
 
                     {/* Reorder Level */}
-                    <td className="py-3 px-4 text-xs font-medium text-[#172B24]">
+                    <td className="py-3 px-4 text-xs font-medium text-[#173B67]">
                       <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-gray-100">
                         <Package size={12} className="text-[#64748B]" />
                         {med.reorderLevel}
@@ -342,7 +342,7 @@ export default function MedicinesPage() {
                     <td className="py-3 px-4">
                       <span
                         className={`inline-block px-2.5 py-1 rounded-full text-xs font-semibold ${
-                          med.isActive ? "bg-emerald-100 text-emerald-800" : "bg-red-100 text-red-800"
+                          med.isActive ? "bg-blue-100 text-blue-800" : "bg-red-100 text-red-800"
                         }`}
                       >
                         {med.isActive ? "نشط" : "مؤرشف"}
@@ -356,7 +356,7 @@ export default function MedicinesPage() {
                           type="button"
                           title="تفاصيل الدواء"
                           onClick={() => setViewingMedicine(med)}
-                          className="p-1.5 rounded-lg text-[#64748B] hover:text-[#087F68] hover:bg-[#E6F4F1] transition-colors border-none bg-transparent cursor-pointer"
+                          className="p-1.5 rounded-lg text-[#64748B] hover:text-[#2563EB] hover:bg-[#EFF6FF] transition-colors border-none bg-transparent cursor-pointer"
                         >
                           <Info size={16} />
                         </button>
@@ -388,7 +388,7 @@ export default function MedicinesPage() {
                               className={`p-1.5 rounded-lg transition-colors border-none bg-transparent cursor-pointer ${
                                 med.isActive
                                   ? "text-[#64748B] hover:text-red-600 hover:bg-red-50"
-                                  : "text-emerald-600 hover:bg-emerald-50"
+                                  : "text-blue-600 hover:bg-blue-50"
                               }`}
                             >
                               {med.isActive ? <Archive size={16} /> : <RotateCcw size={16} />}
@@ -406,17 +406,17 @@ export default function MedicinesPage() {
 
         {/* Pagination Footer */}
         {total > pageSize && (
-          <div className="px-4 py-3 bg-[#F5F8F7]/60 border-t border-[#DCE6E1] flex items-center justify-between text-xs text-[#64748B]">
+          <div className="px-4 py-3 bg-[#F1F5F9]/60 border-t border-[#CBD5E1] flex items-center justify-between text-xs text-[#64748B]">
             <div>
-              عرض صفحة <span className="font-bold text-[#172B24]">{page}</span> من أصل{" "}
-              <span className="font-bold text-[#172B24]">{totalPages}</span>
+              عرض صفحة <span className="font-bold text-[#173B67]">{page}</span> من أصل{" "}
+              <span className="font-bold text-[#173B67]">{totalPages}</span>
             </div>
             <div className="flex items-center gap-1">
               <button
                 type="button"
                 disabled={page <= 1}
                 onClick={() => setPage((p) => Math.max(1, p - 1))}
-                className="p-1.5 rounded-lg border border-[#DCE6E1] bg-white text-[#172B24] hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer transition-colors"
+                className="p-1.5 rounded-lg border border-[#CBD5E1] bg-white text-[#173B67] hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer transition-colors"
               >
                 <ChevronRight size={16} />
               </button>
@@ -424,7 +424,7 @@ export default function MedicinesPage() {
                 type="button"
                 disabled={page >= totalPages}
                 onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-                className="p-1.5 rounded-lg border border-[#DCE6E1] bg-white text-[#172B24] hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer transition-colors"
+                className="p-1.5 rounded-lg border border-[#CBD5E1] bg-white text-[#173B67] hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer transition-colors"
               >
                 <ChevronLeft size={16} />
               </button>
@@ -589,11 +589,11 @@ function MedicineFormModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm overflow-y-auto">
-      <div className="w-full max-w-2xl bg-white rounded-2xl shadow-2xl border border-[#DCE6E1] overflow-hidden my-8">
-        <div className="px-6 py-4 bg-[#064E49] text-white flex items-center justify-between">
+      <div className="w-full max-w-2xl bg-white rounded-2xl shadow-2xl border border-[#CBD5E1] overflow-hidden my-8">
+        <div className="px-6 py-4 bg-[#173B67] text-white flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-[#087F68] flex items-center justify-center">
-              <Pill size={18} className="text-[#20C997]" />
+            <div className="w-8 h-8 rounded-lg bg-[#2563EB] flex items-center justify-center">
+              <Pill size={18} className="text-[#3B82F6]" />
             </div>
             <h3 className="font-bold text-base m-0">{title}</h3>
           </div>
@@ -617,7 +617,7 @@ function MedicineFormModal({
           {/* Basic Info */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="sm:col-span-2">
-              <label className="block text-xs font-semibold text-[#172B24] mb-1">
+              <label className="block text-xs font-semibold text-[#173B67] mb-1">
                 اسم الدواء التجاري <span className="text-red-500">*</span>
               </label>
               <input
@@ -626,16 +626,16 @@ function MedicineFormModal({
                 onChange={(e) => setName(e.target.value)}
                 placeholder="مثال: بنادول اكسترا"
                 required
-                className="w-full py-2.5 px-3.5 rounded-xl border border-[#DCE6E1] text-sm focus:border-[#20C997] outline-none"
+                className="w-full py-2.5 px-3.5 rounded-xl border border-[#CBD5E1] text-sm focus:border-[#3B82F6] outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#172B24] mb-1">التصنيف</label>
+              <label className="block text-xs font-semibold text-[#173B67] mb-1">التصنيف</label>
               <select
                 value={categoryId || ""}
                 onChange={(e) => setCategoryId(e.target.value ? Number(e.target.value) : undefined)}
-                className="w-full py-2.5 px-3.5 rounded-xl border border-[#DCE6E1] text-sm bg-white focus:border-[#20C997] outline-none"
+                className="w-full py-2.5 px-3.5 rounded-xl border border-[#CBD5E1] text-sm bg-white focus:border-[#3B82F6] outline-none"
               >
                 <option value="">بدون تصنيف</option>
                 {categories.map((c) => (
@@ -647,114 +647,114 @@ function MedicineFormModal({
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#172B24] mb-1">الشركة المصنعة</label>
+              <label className="block text-xs font-semibold text-[#173B67] mb-1">الشركة المصنعة</label>
               <input
                 type="text"
                 value={manufacturer}
                 onChange={(e) => setManufacturer(e.target.value)}
                 placeholder="مثال: GSK"
-                className="w-full py-2.5 px-3.5 rounded-xl border border-[#DCE6E1] text-sm focus:border-[#20C997] outline-none"
+                className="w-full py-2.5 px-3.5 rounded-xl border border-[#CBD5E1] text-sm focus:border-[#3B82F6] outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#172B24] mb-1">الاسم العلمي</label>
+              <label className="block text-xs font-semibold text-[#173B67] mb-1">الاسم العلمي</label>
               <input
                 type="text"
                 value={scientificName}
                 onChange={(e) => setScientificName(e.target.value)}
                 placeholder="مثال: Paracetamol + Caffeine"
-                className="w-full py-2.5 px-3.5 rounded-xl border border-[#DCE6E1] text-sm focus:border-[#20C997] outline-none"
+                className="w-full py-2.5 px-3.5 rounded-xl border border-[#CBD5E1] text-sm focus:border-[#3B82F6] outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#172B24] mb-1">المادة الفعالة</label>
+              <label className="block text-xs font-semibold text-[#173B67] mb-1">المادة الفعالة</label>
               <input
                 type="text"
                 value={activeIngredient}
                 onChange={(e) => setActiveIngredient(e.target.value)}
                 placeholder="مثال: Paracetamol"
-                className="w-full py-2.5 px-3.5 rounded-xl border border-[#DCE6E1] text-sm focus:border-[#20C997] outline-none"
+                className="w-full py-2.5 px-3.5 rounded-xl border border-[#CBD5E1] text-sm focus:border-[#3B82F6] outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#172B24] mb-1">التركيز</label>
+              <label className="block text-xs font-semibold text-[#173B67] mb-1">التركيز</label>
               <input
                 type="text"
                 value={strength}
                 onChange={(e) => setStrength(e.target.value)}
                 placeholder="مثال: 500mg"
-                className="w-full py-2.5 px-3.5 rounded-xl border border-[#DCE6E1] text-sm focus:border-[#20C997] outline-none"
+                className="w-full py-2.5 px-3.5 rounded-xl border border-[#CBD5E1] text-sm focus:border-[#3B82F6] outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#172B24] mb-1">الشكل الدوائي</label>
+              <label className="block text-xs font-semibold text-[#173B67] mb-1">الشكل الدوائي</label>
               <input
                 type="text"
                 value={dosageForm}
                 onChange={(e) => setDosageForm(e.target.value)}
                 placeholder="مثال: أقراص، شراب، أمبول"
-                className="w-full py-2.5 px-3.5 rounded-xl border border-[#DCE6E1] text-sm focus:border-[#20C997] outline-none"
+                className="w-full py-2.5 px-3.5 rounded-xl border border-[#CBD5E1] text-sm focus:border-[#3B82F6] outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#172B24] mb-1">حجم العبوة</label>
+              <label className="block text-xs font-semibold text-[#173B67] mb-1">حجم العبوة</label>
               <input
                 type="text"
                 value={packSize}
                 onChange={(e) => setPackSize(e.target.value)}
                 placeholder="مثال: 24 قرص"
-                className="w-full py-2.5 px-3.5 rounded-xl border border-[#DCE6E1] text-sm focus:border-[#20C997] outline-none"
+                className="w-full py-2.5 px-3.5 rounded-xl border border-[#CBD5E1] text-sm focus:border-[#3B82F6] outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#172B24] mb-1">حد إعادة الطلب</label>
+              <label className="block text-xs font-semibold text-[#173B67] mb-1">حد إعادة الطلب</label>
               <input
                 type="number"
                 min="0"
                 value={reorderLevel}
                 onChange={(e) => setReorderLevel(Number(e.target.value))}
                 placeholder="مثال: 10"
-                className="w-full py-2.5 px-3.5 rounded-xl border border-[#DCE6E1] text-sm focus:border-[#20C997] outline-none"
+                className="w-full py-2.5 px-3.5 rounded-xl border border-[#CBD5E1] text-sm focus:border-[#3B82F6] outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#172B24] mb-1">الباركود</label>
+              <label className="block text-xs font-semibold text-[#173B67] mb-1">الباركود</label>
               <input
                 type="text"
                 value={barcode}
                 onChange={(e) => setBarcode(e.target.value)}
                 placeholder="امسح أو اكتب الباركود"
-                className="w-full py-2.5 px-3.5 rounded-xl border border-[#DCE6E1] text-sm font-mono focus:border-[#20C997] outline-none"
+                className="w-full py-2.5 px-3.5 rounded-xl border border-[#CBD5E1] text-sm font-mono focus:border-[#3B82F6] outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#172B24] mb-1">كود الصنف (SKU)</label>
+              <label className="block text-xs font-semibold text-[#173B67] mb-1">كود الصنف (SKU)</label>
               <input
                 type="text"
                 value={sku}
                 onChange={(e) => setSku(e.target.value)}
                 placeholder="مثال: MED-001"
-                className="w-full py-2.5 px-3.5 rounded-xl border border-[#DCE6E1] text-sm font-mono focus:border-[#20C997] outline-none"
+                className="w-full py-2.5 px-3.5 rounded-xl border border-[#CBD5E1] text-sm font-mono focus:border-[#3B82F6] outline-none"
               />
             </div>
           </div>
 
           {/* Pricing Section */}
-          <div className="pt-2 border-t border-[#DCE6E1]">
-            <h4 className="text-xs font-bold text-[#064E49] uppercase tracking-wider mb-3">
+          <div className="pt-2 border-t border-[#CBD5E1]">
+            <h4 className="text-xs font-bold text-[#173B67] uppercase tracking-wider mb-3">
               التسعير (بالجنيه المصري)
             </h4>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-semibold text-[#172B24] mb-1">سعر الشراء (ج.م)</label>
+                <label className="block text-xs font-semibold text-[#173B67] mb-1">سعر الشراء (ج.م) <span className="text-red-500">*</span></label>
                 <input
                   type="number"
                   step="0.01"
@@ -762,7 +762,7 @@ function MedicineFormModal({
                   disabled={isEdit && !canEditPrice}
                   value={purchasePriceEgp}
                   onChange={(e) => setPurchasePriceEgp(e.target.value)}
-                  className="w-full py-2.5 px-3.5 rounded-xl border border-[#DCE6E1] text-sm focus:border-[#20C997] outline-none disabled:bg-gray-100 disabled:cursor-not-allowed"
+                  className="w-full py-2.5 px-3.5 rounded-xl border border-[#CBD5E1] text-sm focus:border-[#3B82F6] outline-none disabled:bg-gray-100 disabled:cursor-not-allowed"
                 />
                 <span className="text-[11px] text-[#64748B] mt-0.5 block">
                   يعادل: {poundsToPiastres(Number(purchasePriceEgp))} قرش
@@ -770,7 +770,7 @@ function MedicineFormModal({
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#172B24] mb-1">سعر البيع للجمهور (ج.م)</label>
+                <label className="block text-xs font-semibold text-[#173B67] mb-1">سعر البيع للجمهور (ج.م) <span className="text-red-500">*</span></label>
                 <input
                   type="number"
                   step="0.01"
@@ -778,7 +778,7 @@ function MedicineFormModal({
                   disabled={isEdit && !canEditPrice}
                   value={salePriceEgp}
                   onChange={(e) => setSalePriceEgp(e.target.value)}
-                  className="w-full py-2.5 px-3.5 rounded-xl border border-[#DCE6E1] text-sm focus:border-[#20C997] outline-none font-bold text-[#087F68] disabled:bg-gray-100 disabled:cursor-not-allowed"
+                  className="w-full py-2.5 px-3.5 rounded-xl border border-[#CBD5E1] text-sm focus:border-[#3B82F6] outline-none font-bold text-[#2563EB] disabled:bg-gray-100 disabled:cursor-not-allowed"
                 />
                 <span className="text-[11px] text-[#64748B] mt-0.5 block">
                   يعادل: {poundsToPiastres(Number(salePriceEgp))} قرش
@@ -794,28 +794,28 @@ function MedicineFormModal({
 
           {/* Description */}
           <div>
-            <label className="block text-xs font-semibold text-[#172B24] mb-1">ملاحظات أو وصف الدواء</label>
+            <label className="block text-xs font-semibold text-[#173B67] mb-1">ملاحظات أو وصف الدواء</label>
             <textarea
               rows={2}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="أي تفاصيل أو تعليمات تخزين..."
-              className="w-full py-2.5 px-3.5 rounded-xl border border-[#DCE6E1] text-sm focus:border-[#20C997] outline-none"
+              className="w-full py-2.5 px-3.5 rounded-xl border border-[#CBD5E1] text-sm focus:border-[#3B82F6] outline-none"
             />
           </div>
 
-          <div className="pt-4 flex items-center justify-end gap-2 border-t border-[#DCE6E1]">
+          <div className="pt-4 flex items-center justify-end gap-2 border-t border-[#CBD5E1]">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2.5 rounded-xl border border-[#DCE6E1] text-[#64748B] hover:bg-[#F5F8F7] text-sm font-medium bg-transparent cursor-pointer"
+              className="px-4 py-2.5 rounded-xl border border-[#CBD5E1] text-[#64748B] hover:bg-[#F1F5F9] text-sm font-medium bg-transparent cursor-pointer"
             >
               إلغاء
             </button>
             <button
               type="submit"
               disabled={loading}
-              className="px-5 py-2.5 rounded-xl bg-[#087F68] text-white hover:bg-[#066653] text-sm font-semibold border-none cursor-pointer disabled:opacity-60 transition-colors shadow-sm"
+              className="px-5 py-2.5 rounded-xl bg-[#2563EB] text-white hover:bg-[#1D4ED8] text-sm font-semibold border-none cursor-pointer disabled:opacity-60 transition-colors shadow-sm"
             >
               {loading ? "جاري الحفظ..." : isEdit ? "تحديث الدواء" : "إضافة الدواء"}
             </button>
@@ -842,15 +842,15 @@ function MedicineDetailsModal({
 }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-      <div className="w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-[#DCE6E1] overflow-hidden">
-        <div className="px-6 py-4 bg-[#064E49] text-white flex items-center justify-between">
+      <div className="w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-[#CBD5E1] overflow-hidden">
+        <div className="px-6 py-4 bg-[#173B67] text-white flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-[#087F68] flex items-center justify-center">
-              <Pill size={18} className="text-[#20C997]" />
+            <div className="w-8 h-8 rounded-lg bg-[#2563EB] flex items-center justify-center">
+              <Pill size={18} className="text-[#3B82F6]" />
             </div>
             <div>
               <h3 className="font-bold text-base m-0">{medicine.name}</h3>
-              <p className="text-xs text-[#B8DCD3] m-0">{medicine.categoryName || "بدون تصنيف"}</p>
+              <p className="text-xs text-[#BFDBFE] m-0">{medicine.categoryName || "بدون تصنيف"}</p>
             </div>
           </div>
           <button
@@ -863,24 +863,24 @@ function MedicineDetailsModal({
         </div>
 
         <div className="p-6 space-y-4 max-h-[75vh] overflow-y-auto text-sm">
-          <div className="grid grid-cols-2 gap-3 bg-[#F5F8F7] p-4 rounded-xl border border-[#DCE6E1]">
+          <div className="grid grid-cols-2 gap-3 bg-[#F1F5F9] p-4 rounded-xl border border-[#CBD5E1]">
             <div>
               <span className="text-xs text-[#64748B] block">سعر الشراء:</span>
-              <span className="font-bold text-[#172B24]">{formatMoney(medicine.purchasePrice)}</span>
+              <span className="font-bold text-[#173B67]">{formatMoney(medicine.purchasePrice)}</span>
             </div>
             <div>
               <span className="text-xs text-[#64748B] block">سعر البيع:</span>
-              <span className="font-bold text-[#087F68] text-base">{formatMoney(medicine.salePrice)}</span>
+              <span className="font-bold text-[#2563EB] text-base">{formatMoney(medicine.salePrice)}</span>
             </div>
             <div>
               <span className="text-xs text-[#64748B] block">حد إعادة الطلب:</span>
-              <span className="font-semibold text-[#172B24]">{medicine.reorderLevel} عبوات</span>
+              <span className="font-semibold text-[#173B67]">{medicine.reorderLevel} عبوات</span>
             </div>
             <div>
               <span className="text-xs text-[#64748B] block">الحالة:</span>
               <span
                 className={`inline-block px-2 py-0.5 rounded-full text-xs font-semibold ${
-                  medicine.isActive ? "bg-emerald-100 text-emerald-800" : "bg-red-100 text-red-800"
+                  medicine.isActive ? "bg-blue-100 text-blue-800" : "bg-red-100 text-red-800"
                 }`}
               >
                 {medicine.isActive ? "نشط" : "مؤرشف"}
@@ -889,40 +889,40 @@ function MedicineDetailsModal({
           </div>
 
           <div className="space-y-2 text-xs">
-            <div className="flex justify-between py-1.5 border-b border-[#DCE6E1]">
+            <div className="flex justify-between py-1.5 border-b border-[#CBD5E1]">
               <span className="text-[#64748B]">الاسم العلمي:</span>
-              <span className="font-semibold text-[#172B24]">{medicine.scientificName || "—"}</span>
+              <span className="font-semibold text-[#173B67]">{medicine.scientificName || "—"}</span>
             </div>
-            <div className="flex justify-between py-1.5 border-b border-[#DCE6E1]">
+            <div className="flex justify-between py-1.5 border-b border-[#CBD5E1]">
               <span className="text-[#64748B]">المادة الفعالة:</span>
-              <span className="font-semibold text-[#172B24]">{medicine.activeIngredient || "—"}</span>
+              <span className="font-semibold text-[#173B67]">{medicine.activeIngredient || "—"}</span>
             </div>
-            <div className="flex justify-between py-1.5 border-b border-[#DCE6E1]">
+            <div className="flex justify-between py-1.5 border-b border-[#CBD5E1]">
               <span className="text-[#64748B]">التركيز والشكل:</span>
-              <span className="font-semibold text-[#172B24]">
+              <span className="font-semibold text-[#173B67]">
                 {medicine.dosageForm} {medicine.strength ? `(${medicine.strength})` : ""}
               </span>
             </div>
-            <div className="flex justify-between py-1.5 border-b border-[#DCE6E1]">
+            <div className="flex justify-between py-1.5 border-b border-[#CBD5E1]">
               <span className="text-[#64748B]">حجم العبوة:</span>
-              <span className="font-semibold text-[#172B24]">{medicine.packSize || "—"}</span>
+              <span className="font-semibold text-[#173B67]">{medicine.packSize || "—"}</span>
             </div>
-            <div className="flex justify-between py-1.5 border-b border-[#DCE6E1]">
+            <div className="flex justify-between py-1.5 border-b border-[#CBD5E1]">
               <span className="text-[#64748B]">الشركة المصنعة:</span>
-              <span className="font-semibold text-[#172B24]">{medicine.manufacturer || "—"}</span>
+              <span className="font-semibold text-[#173B67]">{medicine.manufacturer || "—"}</span>
             </div>
-            <div className="flex justify-between py-1.5 border-b border-[#DCE6E1]">
+            <div className="flex justify-between py-1.5 border-b border-[#CBD5E1]">
               <span className="text-[#64748B]">الباركود:</span>
-              <span className="font-mono font-semibold text-[#172B24]">{medicine.barcode || "—"}</span>
+              <span className="font-mono font-semibold text-[#173B67]">{medicine.barcode || "—"}</span>
             </div>
-            <div className="flex justify-between py-1.5 border-b border-[#DCE6E1]">
+            <div className="flex justify-between py-1.5 border-b border-[#CBD5E1]">
               <span className="text-[#64748B]">كود الصنف (SKU):</span>
-              <span className="font-mono font-semibold text-[#172B24]">{medicine.sku || "—"}</span>
+              <span className="font-mono font-semibold text-[#173B67]">{medicine.sku || "—"}</span>
             </div>
             {medicine.description && (
               <div className="pt-2">
                 <span className="text-[#64748B] block mb-1">ملاحظات:</span>
-                <p className="bg-[#F5F8F7] p-2.5 rounded-lg text-xs leading-relaxed text-[#172B24] m-0">
+                <p className="bg-[#F1F5F9] p-2.5 rounded-lg text-xs leading-relaxed text-[#173B67] m-0">
                   {medicine.description}
                 </p>
               </div>
@@ -933,7 +933,7 @@ function MedicineDetailsModal({
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 rounded-xl border border-[#DCE6E1] text-[#64748B] text-xs font-semibold bg-transparent cursor-pointer"
+              className="px-4 py-2 rounded-xl border border-[#CBD5E1] text-[#64748B] text-xs font-semibold bg-transparent cursor-pointer"
             >
               إغلاق
             </button>
@@ -941,7 +941,7 @@ function MedicineDetailsModal({
               <button
                 type="button"
                 onClick={onEdit}
-                className="px-4 py-2 rounded-xl bg-[#087F68] text-white text-xs font-semibold hover:bg-[#066653] transition-colors border-none cursor-pointer flex items-center gap-1.5"
+                className="px-4 py-2 rounded-xl bg-[#2563EB] text-white text-xs font-semibold hover:bg-[#1D4ED8] transition-colors border-none cursor-pointer flex items-center gap-1.5"
               >
                 <Edit2 size={14} />
                 <span>تعديل الدواء</span>
@@ -968,15 +968,15 @@ function PriceHistoryModal({
 }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-      <div className="w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-[#DCE6E1] overflow-hidden">
-        <div className="px-6 py-4 bg-[#064E49] text-white flex items-center justify-between">
+      <div className="w-full max-w-lg bg-white rounded-2xl shadow-2xl border border-[#CBD5E1] overflow-hidden">
+        <div className="px-6 py-4 bg-[#173B67] text-white flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-[#087F68] flex items-center justify-center">
-              <History size={18} className="text-[#20C997]" />
+            <div className="w-8 h-8 rounded-lg bg-[#2563EB] flex items-center justify-center">
+              <History size={18} className="text-[#3B82F6]" />
             </div>
             <div>
               <h3 className="font-bold text-base m-0">سجل تغير الأسعار</h3>
-              <p className="text-xs text-[#B8DCD3] m-0">{medicine.name}</p>
+              <p className="text-xs text-[#BFDBFE] m-0">{medicine.name}</p>
             </div>
           </div>
           <button
@@ -1002,11 +1002,11 @@ function PriceHistoryModal({
               {history.map((item) => (
                 <div
                   key={item.id}
-                  className="p-3.5 rounded-xl border border-[#DCE6E1] bg-[#F5F8F7]/60 flex items-center justify-between text-xs"
+                  className="p-3.5 rounded-xl border border-[#CBD5E1] bg-[#F1F5F9]/60 flex items-center justify-between text-xs"
                 >
                   <div>
                     <div className="flex items-center gap-2">
-                      <span className="font-bold text-[#172B24]">
+                      <span className="font-bold text-[#173B67]">
                         {item.field === "sale_price" ? "سعر البيع" : "سعر الشراء"}
                       </span>
                       <span className="text-[#64748B] font-mono">
@@ -1014,10 +1014,10 @@ function PriceHistoryModal({
                       </span>
                     </div>
                     <div className="text-[11px] text-[#64748B] mt-1">
-                      بواسطة: <span className="text-[#064E49] font-medium">{item.changedBy || "مدير النظام"}</span>
+                      بواسطة: <span className="text-[#173B67] font-medium">{item.changedBy || "مدير النظام"}</span>
                     </div>
                   </div>
-                  <span className="text-[11px] font-mono text-[#64748B] bg-white px-2 py-1 rounded-md border border-[#DCE6E1]">
+                  <span className="text-[11px] font-mono text-[#64748B] bg-white px-2 py-1 rounded-md border border-[#CBD5E1]">
                     {item.changedAt}
                   </span>
                 </div>
@@ -1025,11 +1025,11 @@ function PriceHistoryModal({
             </div>
           )}
 
-          <div className="mt-4 pt-3 border-t border-[#DCE6E1] flex justify-end">
+          <div className="mt-4 pt-3 border-t border-[#CBD5E1] flex justify-end">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 rounded-xl bg-[#087F68] text-white text-xs font-semibold hover:bg-[#066653] transition-colors border-none cursor-pointer"
+              className="px-4 py-2 rounded-xl bg-[#2563EB] text-white text-xs font-semibold hover:bg-[#1D4ED8] transition-colors border-none cursor-pointer"
             >
               إغلاق
             </button>

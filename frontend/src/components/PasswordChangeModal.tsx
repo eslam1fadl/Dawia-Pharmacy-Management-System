@@ -68,17 +68,17 @@ export default function PasswordChangeModal({ isOpen, forced = false, onClose, o
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm">
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl border border-[#DCE6E1] overflow-hidden">
-        <div className="px-6 py-4 bg-[#064E49] text-white flex items-center justify-between">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl border border-[#CBD5E1] overflow-hidden">
+        <div className="px-6 py-4 bg-[#173B67] text-white flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-[#087F68] flex items-center justify-center">
-              <Lock size={16} className="text-[#20C997]" />
+            <div className="w-8 h-8 rounded-lg bg-[#2563EB] flex items-center justify-center">
+              <Lock size={16} className="text-[#3B82F6]" />
             </div>
             <div>
               <h3 className="font-bold text-base m-0">
                 {forced ? "مطلوب تغيير كلمة المرور" : "تغيير كلمة المرور"}
               </h3>
-              <p className="text-xs text-[#B8DCD3] m-0">
+              <p className="text-xs text-[#BFDBFE] m-0">
                 {forced ? "يرجى تعيين كلمة مرور جديدة للمتابعة" : "قم بتحديث كلمة المرور الخاصة بحسابك"}
               </p>
             </div>
@@ -103,14 +103,14 @@ export default function PasswordChangeModal({ isOpen, forced = false, onClose, o
           )}
 
           {success && (
-            <div className="flex items-center gap-2 p-3 rounded-xl bg-[#E6F4F1] border border-[#20C997] text-[#087F68] text-xs font-semibold">
-              <CheckCircle2 size={16} className="flex-shrink-0 text-[#20C997]" />
+            <div className="flex items-center gap-2 p-3 rounded-xl bg-[#EFF6FF] border border-[#3B82F6] text-[#2563EB] text-xs font-semibold">
+              <CheckCircle2 size={16} className="flex-shrink-0 text-[#3B82F6]" />
               <span>تم تغيير كلمة المرور بنجاح! جاري التحديث...</span>
             </div>
           )}
 
           <div>
-            <label className="block text-xs font-semibold text-[#172B24] mb-1.5">كلمة المرور الحالية</label>
+            <label className="block text-xs font-semibold text-[#173B67] mb-1.5">كلمة المرور الحالية <span className="text-red-500">*</span></label>
             <div className="relative">
               <input
                 type={showCurrent ? "text" : "password"}
@@ -118,12 +118,12 @@ export default function PasswordChangeModal({ isOpen, forced = false, onClose, o
                 onChange={(e) => setCurrentPassword(e.target.value)}
                 placeholder="أدخل كلمة المرور الحالية"
                 required
-                className="w-full py-2.5 px-3.5 pr-3.5 pl-10 rounded-xl border border-[#DCE6E1] text-sm focus:border-[#20C997] focus:ring-2 focus:ring-[#20C997]/20 outline-none"
+                className="w-full py-2.5 px-3.5 pr-3.5 pl-10 rounded-xl border border-[#CBD5E1] text-sm focus:border-[#3B82F6] focus:ring-2 focus:ring-[#3B82F6]/20 outline-none"
               />
               <button
                 type="button"
                 onClick={() => setShowCurrent(!showCurrent)}
-                className="absolute left-3 top-1/2 -translate-y-1/2 text-[#64748B] hover:text-[#172B24] bg-transparent border-none cursor-pointer"
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-[#64748B] hover:text-[#173B67] bg-transparent border-none cursor-pointer"
               >
                 {showCurrent ? <EyeOff size={16} /> : <Eye size={16} />}
               </button>
@@ -131,7 +131,7 @@ export default function PasswordChangeModal({ isOpen, forced = false, onClose, o
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-[#172B24] mb-1.5">كلمة المرور الجديدة</label>
+            <label className="block text-xs font-semibold text-[#173B67] mb-1.5">كلمة المرور الجديدة <span className="text-red-500">*</span></label>
             <div className="relative">
               <input
                 type={showNew ? "text" : "password"}
@@ -140,12 +140,12 @@ export default function PasswordChangeModal({ isOpen, forced = false, onClose, o
                 placeholder="8 أحرف على الأقل"
                 required
                 minLength={8}
-                className="w-full py-2.5 px-3.5 pr-3.5 pl-10 rounded-xl border border-[#DCE6E1] text-sm focus:border-[#20C997] focus:ring-2 focus:ring-[#20C997]/20 outline-none"
+                className="w-full py-2.5 px-3.5 pr-3.5 pl-10 rounded-xl border border-[#CBD5E1] text-sm focus:border-[#3B82F6] focus:ring-2 focus:ring-[#3B82F6]/20 outline-none"
               />
               <button
                 type="button"
                 onClick={() => setShowNew(!showNew)}
-                className="absolute left-3 top-1/2 -translate-y-1/2 text-[#64748B] hover:text-[#172B24] bg-transparent border-none cursor-pointer"
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-[#64748B] hover:text-[#173B67] bg-transparent border-none cursor-pointer"
               >
                 {showNew ? <EyeOff size={16} /> : <Eye size={16} />}
               </button>
@@ -153,14 +153,14 @@ export default function PasswordChangeModal({ isOpen, forced = false, onClose, o
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-[#172B24] mb-1.5">تأكيد كلمة المرور الجديدة</label>
+            <label className="block text-xs font-semibold text-[#173B67] mb-1.5">تأكيد كلمة المرور الجديدة <span className="text-red-500">*</span></label>
             <input
               type="password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               placeholder="أعد إدخال كلمة المرور الجديدة"
               required
-              className="w-full py-2.5 px-3.5 rounded-xl border border-[#DCE6E1] text-sm focus:border-[#20C997] focus:ring-2 focus:ring-[#20C997]/20 outline-none"
+              className="w-full py-2.5 px-3.5 rounded-xl border border-[#CBD5E1] text-sm focus:border-[#3B82F6] focus:ring-2 focus:ring-[#3B82F6]/20 outline-none"
             />
           </div>
 
@@ -169,7 +169,7 @@ export default function PasswordChangeModal({ isOpen, forced = false, onClose, o
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 py-2.5 rounded-xl border border-[#DCE6E1] text-[#64748B] hover:bg-[#F5F8F7] text-sm font-medium bg-transparent cursor-pointer"
+                className="px-4 py-2.5 rounded-xl border border-[#CBD5E1] text-[#64748B] hover:bg-[#F1F5F9] text-sm font-medium bg-transparent cursor-pointer"
               >
                 إلغاء
               </button>
@@ -177,7 +177,7 @@ export default function PasswordChangeModal({ isOpen, forced = false, onClose, o
             <button
               type="submit"
               disabled={loading || success}
-              className="px-5 py-2.5 rounded-xl bg-[#087F68] text-white hover:bg-[#066653] text-sm font-semibold border-none cursor-pointer disabled:opacity-60 transition-colors shadow-sm"
+              className="px-5 py-2.5 rounded-xl bg-[#2563EB] text-white hover:bg-[#1D4ED8] text-sm font-semibold border-none cursor-pointer disabled:opacity-60 transition-colors shadow-sm"
             >
               {loading ? "جاري الحفظ..." : "حفظ كلمة المرور"}
             </button>

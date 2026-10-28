@@ -5,6 +5,10 @@ import { runMigrations } from './db/migrate';
 import { authRouter } from './modules/auth/auth.controller';
 import { activityRouter } from './modules/activity/activity.controller';
 import { medicinesRouter } from './modules/medicines/medicines.controller';
+import { usersRouter } from './modules/users/users.controller';
+import { suppliersRouter } from './modules/suppliers/suppliers.controller';
+import { purchasesRouter } from './modules/purchases/purchases.controller';
+import { settingsRouter } from './modules/settings/settings.controller';
 runMigrations();
 
 const app = express();
@@ -20,6 +24,10 @@ app.get('/api/health', (_req, res) => {
 app.use('/api/auth', authRouter);
 app.use('/api/activity', activityRouter);
 app.use('/api/medicines', medicinesRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/suppliers', suppliersRouter);
+app.use('/api/purchases', purchasesRouter);
+app.use('/api/settings', settingsRouter);
 
 app.use((_req, res) => {
   res.status(404).json({ error: 'المسار غير موجود' });

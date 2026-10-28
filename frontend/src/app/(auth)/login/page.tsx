@@ -60,30 +60,30 @@ export default function LoginPage() {
   return (
     <div
       dir="rtl"
-      className="min-h-screen bg-[#F5F8F7] flex items-center justify-center p-4 selection:bg-[#20C997]/20"
+      className="min-h-screen bg-[#F1F5F9] flex items-center justify-center p-4 selection:bg-[#3B82F6]/20"
     >
-      <div className="w-full max-w-[960px] bg-white rounded-[28px] border border-[#DCE6E1] shadow-[0_20px_50px_rgba(6,78,73,0.08)] overflow-hidden grid grid-cols-1 md:grid-cols-2">
+      <div className="w-full max-w-[960px] bg-white rounded-[28px] border border-[#CBD5E1] shadow-[0_20px_50px_rgba(6,78,73,0.08)] overflow-hidden grid grid-cols-1 md:grid-cols-2">
         {/* ── Brand panel ───────────────────────────── */}
-        <div className="relative hidden md:flex flex-col justify-between bg-[#064E49] p-10 overflow-hidden text-white">
+        <div className="relative hidden md:flex flex-col justify-between bg-[#173B67] p-10 overflow-hidden text-white">
           {/* Subtle Ambient Glows */}
-          <div className="absolute -left-20 -top-20 w-72 h-72 rounded-full bg-[#20C997]/20 blur-3xl pointer-events-none" />
-          <div className="absolute -right-16 -bottom-16 w-80 h-80 rounded-full bg-[#087F68]/40 blur-3xl pointer-events-none" />
+          <div className="absolute -left-20 -top-20 w-72 h-72 rounded-full bg-[#3B82F6]/20 blur-3xl pointer-events-none" />
+          <div className="absolute -right-16 -bottom-16 w-80 h-80 rounded-full bg-[#2563EB]/40 blur-3xl pointer-events-none" />
           <div className="absolute inset-0 opacity-[0.05] [background-image:radial-gradient(#fff_1px,transparent_1px)] [background-size:20px_20px] pointer-events-none" />
 
           {/* Header Brand */}
           <div className="relative z-10 flex items-center gap-3">
-            <div className="w-12 h-12 rounded-2xl bg-[#087F68] flex items-center justify-center shadow-lg ring-1 ring-white/20">
-              <HeartPulse size={26} className="text-[#20C997]" strokeWidth={2.2} />
+            <div className="w-12 h-12 rounded-2xl bg-[#2563EB] flex items-center justify-center shadow-lg ring-1 ring-white/20">
+              <HeartPulse size={26} className="text-[#3B82F6]" strokeWidth={2.2} />
             </div>
             <div>
               <h1 className="text-white text-2xl font-bold tracking-tight m-0 leading-none">دوايا | Dawaya</h1>
-              <span className="text-[#20C997] text-xs font-medium block mt-1">Pharmacy Management System</span>
+              <span className="text-[#3B82F6] text-xs font-medium block mt-1">Pharmacy Management System</span>
             </div>
           </div>
 
           {/* Slogan */}
           <div className="relative z-10 my-8">
-            <div className="inline-block px-3 py-1 rounded-full bg-white/10 text-[#20C997] text-xs font-semibold mb-3">
+            <div className="inline-block px-3 py-1 rounded-full bg-white/10 text-[#3B82F6] text-xs font-semibold mb-3">
               إدارة صيدليتك ببساطة
             </div>
             <h2 className="text-white text-3xl font-extrabold leading-snug m-0 mb-3">
@@ -98,7 +98,7 @@ export default function LoginPage() {
 
           {/* Security footnote */}
           <div className="relative z-10 flex items-center gap-2 text-xs text-white/70">
-            <ShieldCheck size={16} className="text-[#20C997]" />
+            <ShieldCheck size={16} className="text-[#3B82F6]" />
             <span>نظام آمن وصلاحيات محكمة حسب دور كل مستخدم</span>
           </div>
         </div>
@@ -106,10 +106,10 @@ export default function LoginPage() {
         {/* ── Form panel ────────────────────────────── */}
         <div className="p-8 sm:p-12 flex flex-col justify-center bg-white">
           <div className="mb-8 text-center md:text-right">
-            <div className="md:hidden w-12 h-12 rounded-2xl bg-[#064E49] flex items-center justify-center mx-auto mb-4">
-              <HeartPulse size={24} className="text-[#20C997]" strokeWidth={2} />
+            <div className="md:hidden w-12 h-12 rounded-2xl bg-[#173B67] flex items-center justify-center mx-auto mb-4">
+              <HeartPulse size={24} className="text-[#3B82F6]" strokeWidth={2} />
             </div>
-            <h2 className="text-[#172B24] text-2xl font-bold m-0">تسجيل الدخول</h2>
+            <h2 className="text-[#173B67] text-2xl font-bold m-0">تسجيل الدخول</h2>
             <p className="text-[#64748B] text-sm mt-1.5 m-0">
               أهلاً بعودتك، سجّل دخولك لمتابعة العمل في الصيدلية
             </p>
@@ -134,8 +134,8 @@ export default function LoginPage() {
 
           <form onSubmit={formik.handleSubmit} className="flex flex-col gap-4" noValidate>
             <div>
-              <label htmlFor="username" className="text-[#172B24] text-xs font-bold block mb-1.5">
-                اسم المستخدم
+              <label htmlFor="username" className="text-[#173B67] text-xs font-bold block mb-1.5">
+                اسم المستخدم <span className="text-red-500">*</span>
               </label>
               <div className="relative">
                 <User size={17} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#94A3A0]" />
@@ -148,10 +148,10 @@ export default function LoginPage() {
                   value={formik.values.username}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  className={`w-full py-3 pr-11 pl-4 rounded-xl bg-white text-[#172B24] text-sm placeholder:text-[#94A3A0] outline-none border transition-all ${
+                  className={`w-full py-3 pr-11 pl-4 rounded-xl bg-white text-[#173B67] text-sm placeholder:text-[#94A3A0] outline-none border transition-all ${
                     usernameError
                       ? "border-[#B91C1C] focus:ring-4 focus:ring-[#B91C1C]/15"
-                      : "border-[#DCE6E1] hover:border-[#20C997]/60 focus:border-[#20C997] focus:ring-4 focus:ring-[#20C997]/20"
+                      : "border-[#CBD5E1] hover:border-[#3B82F6]/60 focus:border-[#3B82F6] focus:ring-4 focus:ring-[#3B82F6]/20"
                   }`}
                 />
               </div>
@@ -159,8 +159,8 @@ export default function LoginPage() {
             </div>
 
             <div>
-              <label htmlFor="password" className="text-[#172B24] text-xs font-bold block mb-1.5">
-                كلمة المرور
+              <label htmlFor="password" className="text-[#173B67] text-xs font-bold block mb-1.5">
+                كلمة المرور <span className="text-red-500">*</span>
               </label>
               <div className="relative">
                 <Lock size={17} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#94A3A0]" />
@@ -173,17 +173,17 @@ export default function LoginPage() {
                   value={formik.values.password}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
-                  className={`w-full py-3 pr-11 pl-11 rounded-xl bg-white text-[#172B24] text-sm placeholder:text-[#94A3A0] outline-none border transition-all ${
+                  className={`w-full py-3 pr-11 pl-11 rounded-xl bg-white text-[#173B67] text-sm placeholder:text-[#94A3A0] outline-none border transition-all ${
                     passwordError
                       ? "border-[#B91C1C] focus:ring-4 focus:ring-[#B91C1C]/15"
-                      : "border-[#DCE6E1] hover:border-[#20C997]/60 focus:border-[#20C997] focus:ring-4 focus:ring-[#20C997]/20"
+                      : "border-[#CBD5E1] hover:border-[#3B82F6]/60 focus:border-[#3B82F6] focus:ring-4 focus:ring-[#3B82F6]/20"
                   }`}
                 />
                 <button
                   type="button"
                   aria-label={showPw ? "إخفاء كلمة المرور" : "إظهار كلمة المرور"}
                   onClick={() => setShowPw((p) => !p)}
-                  className="absolute left-3 top-1/2 -translate-y-1/2 p-1 rounded-md text-[#94A3A0] hover:text-[#172B24] bg-transparent border-none cursor-pointer outline-none"
+                  className="absolute left-3 top-1/2 -translate-y-1/2 p-1 rounded-md text-[#94A3A0] hover:text-[#173B67] bg-transparent border-none cursor-pointer outline-none"
                 >
                   {showPw ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
@@ -194,7 +194,7 @@ export default function LoginPage() {
             <button
               type="submit"
               disabled={formik.isSubmitting}
-              className="mt-3 w-full py-3.5 rounded-xl border-none text-white text-sm font-bold transition-all outline-none bg-[#087F68] hover:bg-[#066653] disabled:opacity-60 cursor-pointer shadow-[0_6px_20px_rgba(8,127,104,0.25)] hover:shadow-[0_8px_25px_rgba(6,102,83,0.35)]"
+              className="mt-3 w-full py-3.5 rounded-xl border-none text-white text-sm font-bold transition-all outline-none bg-[#2563EB] hover:bg-[#1D4ED8] disabled:opacity-60 cursor-pointer shadow-[0_6px_20px_rgba(8,127,104,0.25)] hover:shadow-[0_8px_25px_rgba(6,102,83,0.35)]"
             >
               {formik.isSubmitting ? "جاري التحقق والدخول..." : "تسجيل الدخول"}
             </button>

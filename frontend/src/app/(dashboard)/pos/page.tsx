@@ -107,7 +107,7 @@ export default function POSPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
         {/* Medicine Selector (2 Columns) */}
         <div className="lg:col-span-2 space-y-4">
-          <div className="bg-white p-4 rounded-2xl border border-[#DCE6E1] shadow-sm">
+          <div className="bg-white p-4 rounded-2xl border border-[#CBD5E1] shadow-sm">
             <div className="relative">
               <Search size={18} className="absolute right-3.5 top-1/2 -translate-y-1/2 text-[#64748B]" />
               <input
@@ -115,13 +115,13 @@ export default function POSPage() {
                 value={searchQuery}
                 onChange={(e) => handleSearch(e.target.value)}
                 placeholder="امسح الباركود أو ابحث باسم الدواء..."
-                className="w-full py-2.5 pr-10 pl-4 rounded-xl border border-[#DCE6E1] text-sm focus:border-[#20C997] outline-none"
+                className="w-full py-2.5 pr-10 pl-4 rounded-xl border border-[#CBD5E1] text-sm focus:border-[#3B82F6] outline-none"
               />
             </div>
           </div>
 
-          <div className="bg-white p-4 rounded-2xl border border-[#DCE6E1] shadow-sm">
-            <h3 className="text-sm font-bold text-[#064E49] mb-3">قائمة الأصناف المتاحة للبيع</h3>
+          <div className="bg-white p-4 rounded-2xl border border-[#CBD5E1] shadow-sm">
+            <h3 className="text-sm font-bold text-[#173B67] mb-3">قائمة الأصناف المتاحة للبيع</h3>
             {loading ? (
               <p className="text-center py-8 text-xs text-[#64748B]">جاري البحث...</p>
             ) : medicines.length === 0 ? (
@@ -134,24 +134,24 @@ export default function POSPage() {
                   <div
                     key={med.id}
                     onClick={() => addToCart(med)}
-                    className="p-3 rounded-xl border border-[#DCE6E1] hover:border-[#20C997] hover:bg-[#F5F8F7] cursor-pointer transition-all flex items-center justify-between"
+                    className="p-3 rounded-xl border border-[#CBD5E1] hover:border-[#3B82F6] hover:bg-[#F1F5F9] cursor-pointer transition-all flex items-center justify-between"
                   >
                     <div>
-                      <span className="font-bold text-xs text-[#172B24] block">{med.name}</span>
+                      <span className="font-bold text-xs text-[#173B67] block">{med.name}</span>
                       <span className="text-[11px] text-[#64748B] block">
                         {med.dosageForm} {med.strength ? `(${med.strength})` : ""}
                       </span>
-                      <span className="text-[11px] font-mono text-[#064E49] mt-1 block">
+                      <span className="text-[11px] font-mono text-[#173B67] mt-1 block">
                         باركود: {med.barcode || "—"}
                       </span>
                     </div>
                     <div className="text-left flex flex-col items-end">
-                      <span className="font-bold text-sm text-[#087F68]">
+                      <span className="font-bold text-sm text-[#2563EB]">
                         {formatMoney(med.salePrice)}
                       </span>
                       <button
                         type="button"
-                        className="mt-1 px-2.5 py-1 rounded-lg bg-[#E6F4F1] hover:bg-[#087F68] hover:text-white text-[11px] font-bold text-[#087F68] transition-colors border-none cursor-pointer flex items-center gap-1"
+                        className="mt-1 px-2.5 py-1 rounded-lg bg-[#EFF6FF] hover:bg-[#2563EB] hover:text-white text-[11px] font-bold text-[#2563EB] transition-colors border-none cursor-pointer flex items-center gap-1"
                       >
                         <Plus size={12} />
                         إضافة
@@ -165,11 +165,11 @@ export default function POSPage() {
         </div>
 
         {/* Invoice / Cart Panel (1 Column) */}
-        <div className="bg-white p-5 rounded-2xl border border-[#DCE6E1] shadow-sm space-y-4">
-          <div className="flex items-center justify-between pb-3 border-b border-[#DCE6E1]">
+        <div className="bg-white p-5 rounded-2xl border border-[#CBD5E1] shadow-sm space-y-4">
+          <div className="flex items-center justify-between pb-3 border-b border-[#CBD5E1]">
             <div className="flex items-center gap-2">
-              <ShoppingCart size={18} className="text-[#087F68]" />
-              <h3 className="font-bold text-sm text-[#172B24] m-0">فاتورة البيع الحالية</h3>
+              <ShoppingCart size={18} className="text-[#2563EB]" />
+              <h3 className="font-bold text-sm text-[#173B67] m-0">فاتورة البيع الحالية</h3>
             </div>
             {cart.length > 0 && (
               <button
@@ -183,8 +183,8 @@ export default function POSPage() {
           </div>
 
           {checkoutSuccess && (
-            <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold flex items-center gap-2">
-              <CheckCircle size={16} className="text-emerald-600 flex-shrink-0" />
+            <div className="p-3 rounded-xl bg-blue-50 border border-blue-200 text-blue-800 text-xs font-semibold flex items-center gap-2">
+              <CheckCircle size={16} className="text-blue-600 flex-shrink-0" />
               <span>تم تسجيل الفاتورة بنجاح وطباعة الإيصال!</span>
             </div>
           )}
@@ -199,10 +199,10 @@ export default function POSPage() {
               {cart.map((item) => (
                 <div
                   key={item.medicine.id}
-                  className="p-2.5 rounded-xl bg-[#F5F8F7] border border-[#DCE6E1] flex items-center justify-between text-xs"
+                  className="p-2.5 rounded-xl bg-[#F1F5F9] border border-[#CBD5E1] flex items-center justify-between text-xs"
                 >
                   <div className="min-w-0 flex-1">
-                    <span className="font-bold text-[#172B24] truncate block">{item.medicine.name}</span>
+                    <span className="font-bold text-[#173B67] truncate block">{item.medicine.name}</span>
                     <span className="text-[#64748B] text-[11px]">
                       {formatMoney(item.medicine.salePrice)} × {item.quantity}
                     </span>
@@ -212,7 +212,7 @@ export default function POSPage() {
                     <button
                       type="button"
                       onClick={() => updateQuantity(item.medicine.id, -1)}
-                      className="w-6 h-6 rounded-md bg-white border border-[#DCE6E1] flex items-center justify-center text-[#172B24] cursor-pointer hover:bg-gray-100"
+                      className="w-6 h-6 rounded-md bg-white border border-[#CBD5E1] flex items-center justify-center text-[#173B67] cursor-pointer hover:bg-gray-100"
                     >
                       <Minus size={12} />
                     </button>
@@ -220,7 +220,7 @@ export default function POSPage() {
                     <button
                       type="button"
                       onClick={() => updateQuantity(item.medicine.id, 1)}
-                      className="w-6 h-6 rounded-md bg-white border border-[#DCE6E1] flex items-center justify-center text-[#172B24] cursor-pointer hover:bg-gray-100"
+                      className="w-6 h-6 rounded-md bg-white border border-[#CBD5E1] flex items-center justify-center text-[#173B67] cursor-pointer hover:bg-gray-100"
                     >
                       <Plus size={12} />
                     </button>
@@ -238,10 +238,10 @@ export default function POSPage() {
           )}
 
           {/* Pricing Totals */}
-          <div className="pt-3 border-t border-[#DCE6E1] space-y-2 text-xs">
+          <div className="pt-3 border-t border-[#CBD5E1] space-y-2 text-xs">
             <div className="flex justify-between text-[#64748B]">
               <span>المجموع الفرعي:</span>
-              <span className="font-semibold text-[#172B24]">{formatMoney(subtotalPiastres)}</span>
+              <span className="font-semibold text-[#173B67]">{formatMoney(subtotalPiastres)}</span>
             </div>
 
             <div className="flex items-center justify-between text-[#64748B]">
@@ -252,11 +252,11 @@ export default function POSPage() {
                 step="0.5"
                 value={discount}
                 onChange={(e) => setDiscount(Number(e.target.value) || 0)}
-                className="w-20 py-1 px-2 rounded-lg border border-[#DCE6E1] text-xs text-left"
+                className="w-20 py-1 px-2 rounded-lg border border-[#CBD5E1] text-xs text-left"
               />
             </div>
 
-            <div className="flex justify-between text-base font-bold text-[#064E49] pt-2 border-t border-[#DCE6E1]">
+            <div className="flex justify-between text-base font-bold text-[#173B67] pt-2 border-t border-[#CBD5E1]">
               <span>الإجمالي المستحق:</span>
               <span>{formatMoney(totalPiastres)}</span>
             </div>
@@ -267,7 +267,7 @@ export default function POSPage() {
             type="button"
             disabled={cart.length === 0}
             onClick={handleCheckout}
-            className="w-full py-3 rounded-xl bg-[#087F68] hover:bg-[#066653] disabled:bg-gray-300 disabled:cursor-not-allowed text-white text-sm font-bold shadow-md transition-all border-none cursor-pointer flex items-center justify-center gap-2"
+            className="w-full py-3 rounded-xl bg-[#2563EB] hover:bg-[#1D4ED8] disabled:bg-gray-300 disabled:cursor-not-allowed text-white text-sm font-bold shadow-md transition-all border-none cursor-pointer flex items-center justify-center gap-2"
           >
             <Banknote size={18} />
             <span>تأكيد وطباعة الفاتورة</span>

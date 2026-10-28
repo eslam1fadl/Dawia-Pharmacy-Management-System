@@ -25,7 +25,7 @@ export default function DashboardShell({ children }: { children: React.ReactNode
   }, []);
 
   return (
-    <div className="min-h-screen flex bg-[#F5F8F7]">
+    <div className="h-screen overflow-hidden flex bg-[#F1F5F9]">
       <Sidebar
         open={open}
         onClose={() => setOpen(false)}
@@ -35,27 +35,27 @@ export default function DashboardShell({ children }: { children: React.ReactNode
         }}
       />
 
-      <div className="flex-1 min-w-0 flex flex-col">
+      <div className="flex-1 min-w-0 h-full overflow-y-auto flex flex-col">
         {/* Mobile top header */}
-        <header className="lg:hidden h-14 px-4 flex items-center justify-between bg-white border-b border-[#DCE6E1] sticky top-0 z-20">
+        <header className="lg:hidden h-14 px-4 flex items-center justify-between bg-white border-b border-[#CBD5E1] sticky top-0 z-20">
           <div className="flex items-center gap-3">
             <button
               type="button"
               aria-label="فتح القائمة"
               onClick={() => setOpen(true)}
-              className="p-2 rounded-lg text-[#064E49] bg-transparent border-none cursor-pointer hover:bg-[#F5F8F7]"
+              className="p-2 rounded-lg text-[#173B67] bg-transparent border-none cursor-pointer hover:bg-[#F1F5F9]"
             >
               <Menu size={20} />
             </button>
             <div className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded-lg bg-[#087F68] flex items-center justify-center">
-                <HeartPulse size={16} className="text-[#20C997]" />
+              <div className="w-7 h-7 rounded-lg bg-[#2563EB] flex items-center justify-center">
+                <HeartPulse size={16} className="text-[#3B82F6]" />
               </div>
-              <span className="text-[#064E49] font-bold text-lg">دوائي</span>
+              <span className="text-[#173B67] font-bold text-lg">دوائي</span>
             </div>
           </div>
           {user && (
-            <span className="text-xs px-2.5 py-1 rounded-full bg-[#E6F4F1] text-[#087F68] font-medium">
+            <span className="text-xs px-2.5 py-1 rounded-full bg-[#EFF6FF] text-[#2563EB] font-medium">
               {user.roleLabel || user.username}
             </span>
           )}
@@ -71,7 +71,6 @@ export default function DashboardShell({ children }: { children: React.ReactNode
         onSuccess={() => {
           setShowPasswordModal(false);
           setForcePasswordChange(false);
-          // Refresh user data
           getCurrentUser().then((u) => u && setUser(u));
         }}
       />

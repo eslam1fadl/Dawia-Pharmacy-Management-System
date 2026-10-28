@@ -1,4 +1,4 @@
-export interface ActivityItem {
+﻿export interface ActivityItem {
   id: number;
   userId: number | null;
   username: string | null;
@@ -45,7 +45,7 @@ export async function fetchActivityLog(params?: {
 export function translateAction(action: string): { label: string; color: string } {
   switch (action) {
     case "auth.login":
-      return { label: "تسجيل دخول", color: "bg-emerald-100 text-emerald-800" };
+      return { label: "تسجيل دخول", color: "bg-blue-100 text-blue-800" };
     case "auth.logout":
       return { label: "تسجيل خروج", color: "bg-slate-100 text-slate-700" };
     case "auth.login_failed":
@@ -53,7 +53,7 @@ export function translateAction(action: string): { label: string; color: string 
     case "auth.password_changed":
       return { label: "تغيير كلمة المرور", color: "bg-indigo-100 text-indigo-800" };
     case "medicine.created":
-      return { label: "إضافة دواء جديد", color: "bg-teal-100 text-teal-800" };
+      return { label: "إضافة دواء جديد", color: "bg-blue-100 text-blue-800" };
     case "medicine.updated":
       return { label: "تعديل دواء", color: "bg-blue-100 text-blue-800" };
     case "medicine.price_changed":
@@ -61,7 +61,17 @@ export function translateAction(action: string): { label: string; color: string 
     case "medicine.archived":
       return { label: "أرشفة دواء", color: "bg-red-100 text-red-800" };
     case "medicine.restored":
-      return { label: "استعادة دواء", color: "bg-green-100 text-green-800" };
+      return { label: "استعادة دواء", color: "bg-indigo-100 text-indigo-800" };
+    case "user.created":
+      return { label: "إضافة مستخدم", color: "bg-blue-100 text-blue-800" };
+    case "user.updated":
+      return { label: "تعديل مستخدم", color: "bg-blue-100 text-blue-800" };
+    case "user.activated":
+      return { label: "تفعيل مستخدم", color: "bg-blue-100 text-blue-800" };
+    case "user.deactivated":
+      return { label: "تعطيل مستخدم", color: "bg-red-100 text-red-800" };
+    case "user.password_reset":
+      return { label: "إعادة تعيين كلمة مرور", color: "bg-amber-100 text-amber-800" };
     default:
       return { label: action, color: "bg-gray-100 text-gray-800" };
   }
