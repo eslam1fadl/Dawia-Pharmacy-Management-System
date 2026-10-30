@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState, useTransition } from "react";
 import {
@@ -530,8 +530,30 @@ function MedicineFormModal({
   const [reorderLevel, setReorderLevel] = useState<number>(initialData?.reorderLevel ?? 5);
   const [description, setDescription] = useState(initialData?.description || "");
 
+  // Units of sale
+  const [saleUnit, setSaleUnit] = useState(initialData?.saleUnit || "علبة");
+  const [packUnit, setPackUnit] = useState(initialData?.packUnit || "");
+  const [unitsPerPack, setUnitsPerPack] = useState<number>(initialData?.unitsPerPack ?? 1);
+
+  // Default supplier
+  const [defaultSupplierId, setDefaultSupplierId] = useState<number | undefined>(
+    initialData?.defaultSupplierId ?? undefined
+  );
+  const [suppliers, setSuppliers] = useState<{ id: number; name: string; company: string | null }[]>([]);
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetch("/api/suppliers?status=active&pageSize=200")
+      .then((r) => r.json())
+      .then((d) => setSuppliers(d.items || []))
+      .catch(() => {});
+  }, []);
+
+  const packPrice = packUnit && unitsPerPack > 1
+    ? poundsToPiastres(Number(salePriceEgp)) * unitsPerPack
+    : null;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -565,6 +587,10 @@ function MedicineFormModal({
         categoryId: categoryId || undefined,
         reorderLevel: Number(reorderLevel) || 0,
         description: description.trim() || undefined,
+        defaultSupplierId: defaultSupplierId || null,
+        saleUnit: saleUnit.trim() || "علبة",
+        packUnit: packUnit.trim() || null,
+        unitsPerPack: packUnit.trim() ? (Number(unitsPerPack) || 1) : 1,
       };
 
       // Only send prices if allowed or creating
@@ -790,6 +816,77 @@ function MedicineFormModal({
                 ملاحظة: تعديل الأسعار يتطلب صلاحية خاصة (medicines.edit_price).
               </p>
             )}
+          </div>
+
+          {/* Units of Sale Section */}
+          <div className="pt-2 border-t border-[#CBD5E1]">
+            <h4 className="text-xs font-bold text-[#173B67] uppercase tracking-wider mb-3">
+              وحدات البيع
+            </h4>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div>
+                <label className="block text-xs font-semibold text-[#173B67] mb-1">
+                  وحدة البيع الأساسية <span className="text-red-500">*</span>
+                </label>
+                <input
+                  type="text"
+                  value={saleUnit}
+                  onChange={(e) => setSaleUnit(e.target.value)}
+                  placeholder="مثال: علبة، قرص"
+                  className="w-full py-2.5 px-3.5 rounded-xl border border-[#CBD5E1] text-sm focus:border-[#3B82F6] outline-none"
+                />
+              </div>
+              <div>
+                <label className="block text-xs font-semibold text-[#173B67] mb-1">
+                  وحدة العبوة الكبرى
+                </label>
+                <input
+                  type="text"
+                  value={packUnit}
+                  onChange={(e) => setPackUnit(e.target.value)}
+                  placeholder="مثال: كرتونة (اختياري)"
+                  className="w-full py-2.5 px-3.5 rounded-xl border border-[#CBD5E1] text-sm focus:border-[#3B82F6] outline-none"
+                />
+              </div>
+              {packUnit.trim() && (
+                <div>
+                  <label className="block text-xs font-semibold text-[#173B67] mb-1">
+                    عدد الوحدات في العبوة
+                  </label>
+                  <input
+                    type="number"
+                    min="1"
+                    max="10000"
+                    value={unitsPerPack}
+                    onChange={(e) => setUnitsPerPack(Number(e.target.value))}
+                    className="w-full py-2.5 px-3.5 rounded-xl border border-[#CBD5E1] text-sm focus:border-[#3B82F6] outline-none"
+                  />
+                </div>
+              )}
+            </div>
+            {packUnit.trim() && unitsPerPack > 1 && packPrice !== null && (
+              <p className="mt-2 text-xs text-[#2563EB] bg-[#EFF6FF] rounded-lg px-3 py-1.5 inline-block">
+                سعر العبوة ({packUnit}) = <span className="font-bold">{formatMoney(packPrice)}</span>
+                {" "}({unitsPerPack} × {salePriceEgp} ج.م)
+              </p>
+            )}
+          </div>
+
+          {/* Default Supplier */}
+          <div>
+            <label className="block text-xs font-semibold text-[#173B67] mb-1">المورد الافتراضي</label>
+            <select
+              value={defaultSupplierId || ""}
+              onChange={(e) => setDefaultSupplierId(e.target.value ? Number(e.target.value) : undefined)}
+              className="w-full py-2.5 px-3.5 rounded-xl border border-[#CBD5E1] text-sm bg-white focus:border-[#3B82F6] outline-none"
+            >
+              <option value="">بدون مورد افتراضي</option>
+              {suppliers.map((s) => (
+                <option key={s.id} value={s.id}>
+                  {s.name}{s.company ? ` — ${s.company}` : ""}
+                </option>
+              ))}
+            </select>
           </div>
 
           {/* Description */}

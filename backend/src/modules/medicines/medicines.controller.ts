@@ -4,6 +4,7 @@ import {
   archiveMedicineService,
   createMedicineService,
   getMedicineService,
+  getPriceComparisonService,
   getPriceHistoryService,
   listCategoriesService,
   listMedicinesService,
@@ -20,6 +21,7 @@ medicinesRouter.get('/categories', ...canView, listCategoriesService);
 medicinesRouter.get('/', ...canView, listMedicinesService);
 medicinesRouter.get('/:id', ...canView, getMedicineService);
 medicinesRouter.get('/:id/price-history', ...canView, getPriceHistoryService);
+medicinesRouter.get('/:id/price-comparison', ...canView, getPriceComparisonService);
 
 medicinesRouter.post('/', ...canManage, createMedicineService);
 medicinesRouter.patch('/:id', ...canManage, updateMedicineService);

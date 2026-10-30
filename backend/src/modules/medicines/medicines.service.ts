@@ -33,6 +33,9 @@ const fields = {
   salePrice: money,
   reorderLevel: reorder,
   defaultSupplierId: z.number().int().positive().nullish(),
+  saleUnit: z.string().trim().min(1).max(50).default('علبة'),
+  packUnit: z.string().trim().max(50).transform(v => v === '' ? null : v).nullish(),
+  unitsPerPack: z.number().int().min(1).max(10000).default(1),
   description: z
     .string()
     .trim()
@@ -74,6 +77,9 @@ const COLUMNS: Record<string, string> = {
   salePrice: 'sale_price',
   reorderLevel: 'reorder_level',
   defaultSupplierId: 'default_supplier_id',
+  saleUnit: 'sale_unit',
+  packUnit: 'pack_unit',
+  unitsPerPack: 'units_per_pack',
   description: 'description',
 };
 
@@ -82,7 +88,9 @@ const SELECT = `
          m.strength, m.dosage_form AS dosageForm, m.pack_size AS packSize, m.barcode, m.sku,
          m.manufacturer, m.category_id AS categoryId, c.name AS categoryName,
          m.purchase_price AS purchasePrice, m.sale_price AS salePrice, m.reorder_level AS reorderLevel,
-         m.default_supplier_id AS defaultSupplierId, m.description, m.is_active AS isActive,
+         m.default_supplier_id AS defaultSupplierId,
+         m.sale_unit AS saleUnit, m.pack_unit AS packUnit, m.units_per_pack AS unitsPerPack,
+         m.description, m.is_active AS isActive,
          m.created_at AS createdAt, m.updated_at AS updatedAt
   FROM medicines m LEFT JOIN categories c ON c.id = m.category_id`;
 
@@ -169,10 +177,10 @@ export const createMedicineService = (req: Request, res: Response, next: NextFun
       .prepare(
         `INSERT INTO medicines (name, scientific_name, active_ingredient, strength, dosage_form, pack_size,
                                 barcode, sku, manufacturer, category_id, purchase_price, sale_price,
-                                reorder_level, default_supplier_id, description)
+                                reorder_level, default_supplier_id, sale_unit, pack_unit, units_per_pack, description)
          VALUES (@name, @scientificName, @activeIngredient, @strength, @dosageForm, @packSize,
                  @barcode, @sku, @manufacturer, @categoryId, @purchasePrice, @salePrice,
-                 @reorderLevel, @defaultSupplierId, @description)`
+                 @reorderLevel, @defaultSupplierId, @saleUnit, @packUnit, @unitsPerPack, @description)`
       )
       .run({
         name: d.name,
@@ -189,6 +197,9 @@ export const createMedicineService = (req: Request, res: Response, next: NextFun
         salePrice: d.salePrice,
         reorderLevel: d.reorderLevel,
         defaultSupplierId: d.defaultSupplierId ?? null,
+        saleUnit: d.saleUnit,
+        packUnit: d.packUnit ?? null,
+        unitsPerPack: d.unitsPerPack,
         description: d.description ?? null,
       });
     const newId = Number(info.lastInsertRowid);
@@ -207,7 +218,7 @@ export const updateMedicineService = (req: Request, res: Response, next: NextFun
   const parsed = updateSchema.safeParse(req.body);
   if (!parsed.success) return next(fail(parsed.error.issues[0].message, 400));
 
-  // نحسب الفرق الفعلي بس (اللي اتغيّر فعلًا)
+  // نبني قائمة التغييرات الفعلية (بدون إعادة كتابة الثوابت)
   const changes: Record<string, { old: unknown; new: unknown }> = {};
   for (const [key, value] of Object.entries(parsed.data)) {
     if (value === undefined) continue;
@@ -216,12 +227,12 @@ export const updateMedicineService = (req: Request, res: Response, next: NextFun
     if (before !== after) changes[key] = { old: before, new: after };
   }
   const keys = Object.keys(changes);
-  if (keys.length === 0) return res.status(200).json({ medicine: old, message: 'لا يوجد تغيير' });
+  if (keys.length === 0) return res.status(200).json({ medicine: old, message: 'لا توجد تغييرات' });
 
   const priceKeys: string[] = keys.filter((k) => k === 'purchasePrice' || k === 'salePrice');
   const otherKeys = keys.filter((k) => !priceKeys.includes(k));
 
-  // تعديل الأسعار صلاحية منفصلة عن تعديل بيانات الدواء
+  // تغيير الأسعار يستلزم صلاحية خاصة من الباكيند
   if (priceKeys.length && !res.locals.user.permissions.includes('medicines.edit_price')) {
     return next(fail('ليس لديك صلاحية تعديل الأسعار', 403));
   }
@@ -260,7 +271,7 @@ const setActive = (active: boolean) => (req: Request, res: Response, next: NextF
   const id = Number(req.params.id);
   const medicine = getById(id) as { isActive: boolean } | null;
   if (!medicine) return next(fail('الدواء غير موجود', 404));
-  if (medicine.isActive === active) return res.status(200).json({ medicine, message: 'لا يوجد تغيير' });
+  if (medicine.isActive === active) return res.status(200).json({ medicine, message: 'لا توجد تغييرات' });
 
   db.transaction(() => {
     db.prepare(`UPDATE medicines SET is_active = ?, updated_at = datetime('now') WHERE id = ?`).run(active ? 1 : 0, id);
@@ -271,6 +282,42 @@ const setActive = (active: boolean) => (req: Request, res: Response, next: NextF
 
 export const archiveMedicineService = setActive(false);
 export const restoreMedicineService = setActive(true);
+
+export const getPriceComparisonService = (req: Request, res: Response, next: NextFunction) => {
+  const id = Number(req.params.id);
+  if (!getById(id)) return next(fail('الدواء غير موجود', 404));
+
+  // جلب آخر سعر شراء لكل مورد لهذا الدواء
+  const rows = db.prepare(`
+    SELECT
+      s.id   AS supplierId,
+      s.name AS supplierName,
+      s.company,
+      pi.unit_cost   AS lastUnitCost,
+      p.invoice_date AS lastDate,
+      p.id           AS purchaseId
+    FROM purchase_items pi
+    JOIN purchases p ON p.id = pi.purchase_id AND p.status = 'confirmed'
+    JOIN suppliers s ON s.id = p.supplier_id
+    WHERE pi.medicine_id = ?
+    ORDER BY pi.id DESC
+  `).all(id) as Array<{
+    supplierId: number;
+    supplierName: string;
+    company: string | null;
+    lastUnitCost: number;
+    lastDate: string | null;
+    purchaseId: number;
+  }>;
+
+  // نحتفظ بأول صف لكل مورد (آخر سعر شراء)
+  const bySupplier = new Map<number, typeof rows[0]>();
+  for (const r of rows) {
+    if (!bySupplier.has(r.supplierId)) bySupplier.set(r.supplierId, r);
+  }
+
+  return res.status(200).json({ comparisons: [...bySupplier.values()] });
+};
 
 export const getPriceHistoryService = (req: Request, res: Response, next: NextFunction) => {
   const id = Number(req.params.id);

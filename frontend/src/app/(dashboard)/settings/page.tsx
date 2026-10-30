@@ -20,7 +20,7 @@ import {
 import PageHeader from "@/components/PageHeader";
 import { getCurrentUser, type UserProfile } from "@/lib/auth";
 
-// ─── Types ───────────────────────────────────────────────────────────────────
+// أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬ Types أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬
 
 interface Category {
   id: number;
@@ -32,11 +32,12 @@ interface SettingsMap {
   "pharmacy.name": string;
   "pharmacy.phone": string;
   "pharmacy.address": string;
+  "pharmacy.logo": string;
   "currency.symbol": string;
   "date.format": string;
 }
 
-// ─── Helper components ───────────────────────────────────────────────────────
+// أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬ Helper components أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬
 
 function Alert({
   type,
@@ -109,6 +110,47 @@ function Input({
     />
   );
 }
+function LogoUpload({
+  currentLogo,
+  disabled,
+  onChange,
+}: {
+  currentLogo?: string;
+  disabled?: boolean;
+  onChange: (dataUrl: string | null) => void;
+}) {
+  const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 2 * 1024 * 1024) { alert("ط­ط¬ظ… ط§ظ„ط´ط¹ط§ط± ظٹط¬ط¨ ط£ظ„ط§ ظٹطھط¬ط§ظˆط² 2 ظ…ظٹط¬ط§ط¨ط§ظٹطھ"); return; }
+    const reader = new FileReader();
+    reader.onload = () => onChange(reader.result as string);
+    reader.readAsDataURL(file);
+  };
+
+  return (
+    <div className="flex items-center gap-4">
+      <div className="w-16 h-16 rounded-xl border border-[#CBD5E1] bg-[#F8FAFC] flex items-center justify-center overflow-hidden shrink-0">
+        {currentLogo
+          ? <img src={currentLogo} alt="ط´ط¹ط§ط± ط§ظ„طµظٹط¯ظ„ظٹط©" className="w-full h-full object-contain" />
+          : <Building2 size={28} className="text-[#CBD5E1]" />
+        }
+      </div>
+      <div className="space-y-1">
+        {!disabled && (
+          <label className="flex items-center gap-2 px-3 py-2 rounded-xl border border-[#CBD5E1] text-xs font-semibold text-[#173B67] bg-white hover:border-[#2563EB] cursor-pointer">
+            <input type="file" accept="image/*" className="hidden" onChange={handleFile} />
+            ط±ظپط¹ ط´ط¹ط§ط± ط¬ط¯ظٹط¯
+          </label>
+        )}
+        {currentLogo && !disabled && (
+          <button type="button" onClick={() => onChange(null)} className="text-xs text-red-500 hover:underline cursor-pointer bg-transparent border-none">ط­ط°ظپ ط§ظ„ط´ط¹ط§ط±</button>
+        )}
+        <p className="text-[11px] text-[#94A3B8]">PNG ط£ظˆ JPGطŒ ط£ظ‚طµظ‰ 2 ظ…ظٹط¬ط§ط¨ط§ظٹطھ</p>
+      </div>
+    </div>
+  );
+}
 
 function PrimaryBtn({
   children,
@@ -157,24 +199,25 @@ function GhostBtn({
   );
 }
 
-// ─── Tab definitions ─────────────────────────────────────────────────────────
+// أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬ Tab definitions أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬
 
 const TABS = [
-  { id: "pharmacy", label: "بيانات الصيدلية", icon: Building2 },
-  { id: "categories", label: "التصنيفات الدوائية", icon: Tag },
-  { id: "payment", label: "طرق الدفع", icon: CreditCard },
-  { id: "password", label: "تغيير كلمة المرور", icon: KeyRound },
+  { id: "pharmacy", label: "ط·آ¨ط¸ظ¹ط·آ§ط¸â€ ط·آ§ط·ع¾ ط·آ§ط¸â€‍ط·آµط¸ظ¹ط·آ¯ط¸â€‍ط¸ظ¹ط·آ©", icon: Building2 },
+  { id: "categories", label: "ط·آ§ط¸â€‍ط·ع¾ط·آµط¸â€ ط¸ظ¹ط¸ظ¾ط·آ§ط·ع¾ ط·آ§ط¸â€‍ط·آ¯ط¸ث†ط·آ§ط·آ¦ط¸ظ¹ط·آ©", icon: Tag },
+  { id: "payment", label: "ط·آ·ط·آ±ط¸â€ڑ ط·آ§ط¸â€‍ط·آ¯ط¸ظ¾ط·آ¹", icon: CreditCard },
+  { id: "password", label: "ط·ع¾ط·ط›ط¸ظ¹ط¸ظ¹ط·آ± ط¸ئ’ط¸â€‍ط¸â€¦ط·آ© ط·آ§ط¸â€‍ط¸â€¦ط·آ±ط¸ث†ط·آ±", icon: KeyRound },
 ] as const;
 
 type TabId = (typeof TABS)[number]["id"];
 
-// ─── Tab: Pharmacy Info ───────────────────────────────────────────────────────
+// أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬ Tab: Pharmacy Info أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬
 
 function PharmacyTab({ canManage }: { canManage: boolean }) {
   const [form, setForm] = useState<SettingsMap>({
     "pharmacy.name": "",
     "pharmacy.phone": "",
     "pharmacy.address": "",
+    "pharmacy.logo": "",
     "currency.symbol": "ج.م",
     "date.format": "ar-EG",
   });
@@ -193,12 +236,12 @@ function PharmacyTab({ canManage }: { canManage: boolean }) {
             "pharmacy.name": d.settings["pharmacy.name"] ?? "",
             "pharmacy.phone": d.settings["pharmacy.phone"] ?? "",
             "pharmacy.address": d.settings["pharmacy.address"] ?? "",
-            "currency.symbol": d.settings["currency.symbol"] ?? "ج.م",
+            "currency.symbol": d.settings["currency.symbol"] ?? "ط·آ¬.ط¸â€¦",
             "date.format": d.settings["date.format"] ?? "ar-EG",
           }));
         }
       })
-      .catch(() => setError("تعذّر تحميل بيانات الصيدلية"))
+      .catch(() => setError("ط·ع¾ط·آ¹ط·آ°ط¸â€کط·آ± ط·ع¾ط·آ­ط¸â€¦ط¸ظ¹ط¸â€‍ ط·آ¨ط¸ظ¹ط·آ§ط¸â€ ط·آ§ط·ع¾ ط·آ§ط¸â€‍ط·آµط¸ظ¹ط·آ¯ط¸â€‍ط¸ظ¹ط·آ©"))
       .finally(() => setLoading(false));
   }, []);
 
@@ -209,7 +252,7 @@ function PharmacyTab({ canManage }: { canManage: boolean }) {
     setError(null);
     setSuccess(null);
     if (!form["pharmacy.name"].trim()) {
-      setError("اسم الصيدلية مطلوب");
+      setError("ط·آ§ط·آ³ط¸â€¦ ط·آ§ط¸â€‍ط·آµط¸ظ¹ط·آ¯ط¸â€‍ط¸ظ¹ط·آ© ط¸â€¦ط·آ·ط¸â€‍ط¸ث†ط·آ¨");
       return;
     }
     setSaving(true);
@@ -220,11 +263,11 @@ function PharmacyTab({ canManage }: { canManage: boolean }) {
         body: JSON.stringify(form),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "فشل حفظ الإعدادات");
-      setSuccess("تم حفظ بيانات الصيدلية بنجاح");
+      if (!res.ok) throw new Error(data.error || "ط¸ظ¾ط·آ´ط¸â€‍ ط·آ­ط¸ظ¾ط·آ¸ ط·آ§ط¸â€‍ط·آ¥ط·آ¹ط·آ¯ط·آ§ط·آ¯ط·آ§ط·ع¾");
+      setSuccess("ط·ع¾ط¸â€¦ ط·آ­ط¸ظ¾ط·آ¸ ط·آ¨ط¸ظ¹ط·آ§ط¸â€ ط·آ§ط·ع¾ ط·آ§ط¸â€‍ط·آµط¸ظ¹ط·آ¯ط¸â€‍ط¸ظ¹ط·آ© ط·آ¨ط¸â€ ط·آ¬ط·آ§ط·آ­");
     } catch (e: unknown) {
       const err = e as Error;
-      setError(err?.message || "حدث خطأ أثناء الحفظ");
+      setError(err?.message || "ط·آ­ط·آ¯ط·آ« ط·آ®ط·آ·ط·آ£ ط·آ£ط·آ«ط¸â€ ط·آ§ط·طŒ ط·آ§ط¸â€‍ط·آ­ط¸ظ¾ط·آ¸");
     } finally {
       setSaving(false);
     }
@@ -232,7 +275,7 @@ function PharmacyTab({ canManage }: { canManage: boolean }) {
 
   if (loading) {
     return (
-      <div className="p-8 text-center text-xs text-[#64748B]">جاري التحميل...</div>
+      <div className="p-8 text-center text-xs text-[#64748B]">ط·آ¬ط·آ§ط·آ±ط¸ظ¹ ط·آ§ط¸â€‍ط·ع¾ط·آ­ط¸â€¦ط¸ظ¹ط¸â€‍...</div>
     );
   }
 
@@ -244,22 +287,31 @@ function PharmacyTab({ canManage }: { canManage: boolean }) {
       {!canManage && (
         <div className="flex items-center gap-2 p-3 rounded-xl bg-amber-50 border border-amber-200 text-amber-700 text-xs font-semibold">
           <ShieldOff size={14} />
-          <span>عرض فقط — ليس لديك صلاحية تعديل الإعدادات</span>
+          <span>ط·آ¹ط·آ±ط·آ¶ ط¸ظ¾ط¸â€ڑط·آ· أ¢â‚¬â€‌ ط¸â€‍ط¸ظ¹ط·آ³ ط¸â€‍ط·آ¯ط¸ظ¹ط¸ئ’ ط·آµط¸â€‍ط·آ§ط·آ­ط¸ظ¹ط·آ© ط·ع¾ط·آ¹ط·آ¯ط¸ظ¹ط¸â€‍ ط·آ§ط¸â€‍ط·آ¥ط·آ¹ط·آ¯ط·آ§ط·آ¯ط·آ§ط·ع¾</span>
         </div>
       )}
 
       <div>
-        <FieldLabel required>اسم الصيدلية</FieldLabel>
+        <FieldLabel required>ط·آ§ط·آ³ط¸â€¦ ط·آ§ط¸â€‍ط·آµط¸ظ¹ط·آ¯ط¸â€‍ط¸ظ¹ط·آ©</FieldLabel>
         <Input
           value={form["pharmacy.name"]}
           onChange={set("pharmacy.name")}
-          placeholder="اسم الصيدلية"
+          placeholder="ط·آ§ط·آ³ط¸â€¦ ط·آ§ط¸â€‍ط·آµط¸ظ¹ط·آ¯ط¸â€‍ط¸ظ¹ط·آ©"
           disabled={!canManage}
         />
       </div>
 
       <div>
-        <FieldLabel>رقم الهاتف</FieldLabel>
+        <FieldLabel>ط·آ´ط·آ¹ط·آ§ط·آ± ط·آ§ط¸â€‍ط·آµط¸ظ¹ط·آ¯ط¸â€‍ط¸ظ¹ط·آ©</FieldLabel>
+        <LogoUpload
+          currentLogo={form["pharmacy.logo" as keyof typeof form] as string | undefined}
+          disabled={!canManage}
+          onChange={(dataUrl) => setForm((p) => ({ ...p, "pharmacy.logo": dataUrl || "" }))}
+        />
+      </div>
+
+      <div>
+        <FieldLabel>ط·آ±ط¸â€ڑط¸â€¦ ط·آ§ط¸â€‍ط¸â€،ط·آ§ط·ع¾ط¸ظ¾</FieldLabel>
         <Input
           value={form["pharmacy.phone"]}
           onChange={set("pharmacy.phone")}
@@ -269,36 +321,36 @@ function PharmacyTab({ canManage }: { canManage: boolean }) {
       </div>
 
       <div>
-        <FieldLabel>العنوان</FieldLabel>
+        <FieldLabel>ط·آ§ط¸â€‍ط·آ¹ط¸â€ ط¸ث†ط·آ§ط¸â€ </FieldLabel>
         <Input
           value={form["pharmacy.address"]}
           onChange={set("pharmacy.address")}
-          placeholder="المحافظة، المدينة، الشارع"
+          placeholder="ط·آ§ط¸â€‍ط¸â€¦ط·آ­ط·آ§ط¸ظ¾ط·آ¸ط·آ©ط·إ’ ط·آ§ط¸â€‍ط¸â€¦ط·آ¯ط¸ظ¹ط¸â€ ط·آ©ط·إ’ ط·آ§ط¸â€‍ط·آ´ط·آ§ط·آ±ط·آ¹"
           disabled={!canManage}
         />
       </div>
 
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <FieldLabel>رمز العملة</FieldLabel>
+          <FieldLabel>ط·آ±ط¸â€¦ط·آ² ط·آ§ط¸â€‍ط·آ¹ط¸â€¦ط¸â€‍ط·آ©</FieldLabel>
           <Input
             value={form["currency.symbol"]}
             onChange={set("currency.symbol")}
-            placeholder="ج.م"
+            placeholder="ط·آ¬.ط¸â€¦"
             disabled={!canManage}
           />
         </div>
         <div>
-          <FieldLabel>تنسيق التاريخ</FieldLabel>
+          <FieldLabel>ط·ع¾ط¸â€ ط·آ³ط¸ظ¹ط¸â€ڑ ط·آ§ط¸â€‍ط·ع¾ط·آ§ط·آ±ط¸ظ¹ط·آ®</FieldLabel>
           <select
             value={form["date.format"]}
             onChange={(e) => set("date.format")(e.target.value)}
             disabled={!canManage}
             className="w-full py-2.5 px-3.5 rounded-xl border border-[#CBD5E1] text-xs outline-none focus:border-[#3B82F6] bg-white disabled:bg-[#F1F5F9] disabled:text-[#94A3B8]"
           >
-            <option value="ar-EG">عربي (ar-EG)</option>
-            <option value="en-GB">إنجليزي (en-GB)</option>
-            <option value="en-US">أمريكي (en-US)</option>
+            <option value="ar-EG">ط·آ¹ط·آ±ط·آ¨ط¸ظ¹ (ar-EG)</option>
+            <option value="en-GB">ط·آ¥ط¸â€ ط·آ¬ط¸â€‍ط¸ظ¹ط·آ²ط¸ظ¹ (en-GB)</option>
+            <option value="en-US">ط·آ£ط¸â€¦ط·آ±ط¸ظ¹ط¸ئ’ط¸ظ¹ (en-US)</option>
           </select>
         </div>
       </div>
@@ -306,14 +358,14 @@ function PharmacyTab({ canManage }: { canManage: boolean }) {
       {canManage && (
         <PrimaryBtn onClick={handleSave} loading={saving}>
           <Save size={14} />
-          {saving ? "جاري الحفظ..." : "حفظ البيانات"}
+          {saving ? "ط·آ¬ط·آ§ط·آ±ط¸ظ¹ ط·آ§ط¸â€‍ط·آ­ط¸ظ¾ط·آ¸..." : "ط·آ­ط¸ظ¾ط·آ¸ ط·آ§ط¸â€‍ط·آ¨ط¸ظ¹ط·آ§ط¸â€ ط·آ§ط·ع¾"}
         </PrimaryBtn>
       )}
     </div>
   );
 }
 
-// ─── Tab: Categories ─────────────────────────────────────────────────────────
+// أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬ Tab: Categories أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬
 
 function CategoriesTab({ canManage }: { canManage: boolean }) {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -336,7 +388,7 @@ function CategoriesTab({ canManage }: { canManage: boolean }) {
     fetch("/api/settings/categories")
       .then((r) => r.json())
       .then((d) => setCategories(d.categories ?? []))
-      .catch(() => setError("تعذّر تحميل التصنيفات"))
+      .catch(() => setError("ط·ع¾ط·آ¹ط·آ°ط¸â€کط·آ± ط·ع¾ط·آ­ط¸â€¦ط¸ظ¹ط¸â€‍ ط·آ§ط¸â€‍ط·ع¾ط·آµط¸â€ ط¸ظ¹ط¸ظ¾ط·آ§ط·ع¾"))
       .finally(() => setLoading(false));
   }, []);
 
@@ -353,14 +405,14 @@ function CategoriesTab({ canManage }: { canManage: boolean }) {
         body: JSON.stringify({ name: newName.trim() }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "فشل إضافة التصنيف");
-      setSuccess("تمت إضافة التصنيف بنجاح");
+      if (!res.ok) throw new Error(data.error || "ط¸ظ¾ط·آ´ط¸â€‍ ط·آ¥ط·آ¶ط·آ§ط¸ظ¾ط·آ© ط·آ§ط¸â€‍ط·ع¾ط·آµط¸â€ ط¸ظ¹ط¸ظ¾");
+      setSuccess("ط·ع¾ط¸â€¦ط·ع¾ ط·آ¥ط·آ¶ط·آ§ط¸ظ¾ط·آ© ط·آ§ط¸â€‍ط·ع¾ط·آµط¸â€ ط¸ظ¹ط¸ظ¾ ط·آ¨ط¸â€ ط·آ¬ط·آ§ط·آ­");
       setNewName("");
       setShowAdd(false);
       load();
     } catch (e: unknown) {
       const err = e as Error;
-      setError(err?.message || "حدث خطأ");
+      setError(err?.message || "ط·آ­ط·آ¯ط·آ« ط·آ®ط·آ·ط·آ£");
     } finally {
       setAdding(false);
     }
@@ -377,13 +429,13 @@ function CategoriesTab({ canManage }: { canManage: boolean }) {
         body: JSON.stringify({ name: editName.trim() }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "فشل تعديل التصنيف");
-      setSuccess("تم تعديل التصنيف بنجاح");
+      if (!res.ok) throw new Error(data.error || "ط¸ظ¾ط·آ´ط¸â€‍ ط·ع¾ط·آ¹ط·آ¯ط¸ظ¹ط¸â€‍ ط·آ§ط¸â€‍ط·ع¾ط·آµط¸â€ ط¸ظ¹ط¸ظ¾");
+      setSuccess("ط·ع¾ط¸â€¦ ط·ع¾ط·آ¹ط·آ¯ط¸ظ¹ط¸â€‍ ط·آ§ط¸â€‍ط·ع¾ط·آµط¸â€ ط¸ظ¹ط¸ظ¾ ط·آ¨ط¸â€ ط·آ¬ط·آ§ط·آ­");
       setEditId(null);
       load();
     } catch (e: unknown) {
       const err = e as Error;
-      setError(err?.message || "حدث خطأ");
+      setError(err?.message || "ط·آ­ط·آ¯ط·آ« ط·آ®ط·آ·ط·آ£");
     } finally {
       setEditLoading(false);
     }
@@ -391,24 +443,24 @@ function CategoriesTab({ canManage }: { canManage: boolean }) {
 
   const handleToggle = async (cat: Category) => {
     if (!cat.isActive) {
-      // Activating — no confirm needed
+      // Activating أ¢â‚¬â€‌ no confirm needed
     } else {
-      if (!confirm(`هل تريد إيقاف تصنيف "${cat.name}"؟ سيؤثر ذلك على الأدوية المرتبطة به.`)) return;
+      if (!confirm(`ط¸â€،ط¸â€‍ ط·ع¾ط·آ±ط¸ظ¹ط·آ¯ ط·آ¥ط¸ظ¹ط¸â€ڑط·آ§ط¸ظ¾ ط·ع¾ط·آµط¸â€ ط¸ظ¹ط¸ظ¾ "${cat.name}"ط·ع؛ ط·آ³ط¸ظ¹ط·آ¤ط·آ«ط·آ± ط·آ°ط¸â€‍ط¸ئ’ ط·آ¹ط¸â€‍ط¸â€° ط·آ§ط¸â€‍ط·آ£ط·آ¯ط¸ث†ط¸ظ¹ط·آ© ط·آ§ط¸â€‍ط¸â€¦ط·آ±ط·ع¾ط·آ¨ط·آ·ط·آ© ط·آ¨ط¸â€،.`)) return;
     }
     setError(null);
     try {
       const res = await fetch(`/api/settings/categories/${cat.id}/toggle`, { method: "PATCH" });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "فشل تغيير حالة التصنيف");
-      setSuccess(data.message || "تم تغيير الحالة");
+      if (!res.ok) throw new Error(data.error || "ط¸ظ¾ط·آ´ط¸â€‍ ط·ع¾ط·ط›ط¸ظ¹ط¸ظ¹ط·آ± ط·آ­ط·آ§ط¸â€‍ط·آ© ط·آ§ط¸â€‍ط·ع¾ط·آµط¸â€ ط¸ظ¹ط¸ظ¾");
+      setSuccess(data.message || "ط·ع¾ط¸â€¦ ط·ع¾ط·ط›ط¸ظ¹ط¸ظ¹ط·آ± ط·آ§ط¸â€‍ط·آ­ط·آ§ط¸â€‍ط·آ©");
       load();
     } catch (e: unknown) {
       const err = e as Error;
-      setError(err?.message || "حدث خطأ");
+      setError(err?.message || "ط·آ­ط·آ¯ط·آ« ط·آ®ط·آ·ط·آ£");
     }
   };
 
-  if (loading) return <div className="p-8 text-center text-xs text-[#64748B]">جاري التحميل...</div>;
+  if (loading) return <div className="p-8 text-center text-xs text-[#64748B]">ط·آ¬ط·آ§ط·آ±ط¸ظ¹ ط·آ§ط¸â€‍ط·ع¾ط·آ­ط¸â€¦ط¸ظ¹ط¸â€‍...</div>;
 
   return (
     <div className="bg-white rounded-2xl border border-[#CBD5E1] shadow-sm p-6 space-y-4">
@@ -417,14 +469,14 @@ function CategoriesTab({ canManage }: { canManage: boolean }) {
 
       <div className="flex items-center justify-between">
         <p className="text-xs text-[#64748B]">
-          إجمالي التصنيفات: <span className="font-bold text-[#173B67]">{categories.length}</span>
-          {" · "}
-          نشط: <span className="font-bold text-green-700">{categories.filter((c) => c.isActive).length}</span>
+          ط·آ¥ط·آ¬ط¸â€¦ط·آ§ط¸â€‍ط¸ظ¹ ط·آ§ط¸â€‍ط·ع¾ط·آµط¸â€ ط¸ظ¹ط¸ظ¾ط·آ§ط·ع¾: <span className="font-bold text-[#173B67]">{categories.length}</span>
+          {" ط¢آ· "}
+          ط¸â€ ط·آ´ط·آ·: <span className="font-bold text-green-700">{categories.filter((c) => c.isActive).length}</span>
         </p>
         {canManage && (
           <PrimaryBtn small onClick={() => { setShowAdd(true); setNewName(""); }}>
             <Plus size={13} />
-            تصنيف جديد
+            ط·ع¾ط·آµط¸â€ ط¸ظ¹ط¸ظ¾ ط·آ¬ط·آ¯ط¸ظ¹ط·آ¯
           </PrimaryBtn>
         )}
       </div>
@@ -437,16 +489,16 @@ function CategoriesTab({ canManage }: { canManage: boolean }) {
             value={newName}
             onChange={(e) => setNewName(e.target.value)}
             onKeyDown={(e) => { if (e.key === "Enter") handleAdd(); if (e.key === "Escape") setShowAdd(false); }}
-            placeholder="اسم التصنيف الجديد"
+            placeholder="ط·آ§ط·آ³ط¸â€¦ ط·آ§ط¸â€‍ط·ع¾ط·آµط¸â€ ط¸ظ¹ط¸ظ¾ ط·آ§ط¸â€‍ط·آ¬ط·آ¯ط¸ظ¹ط·آ¯"
             className="flex-1 py-2 px-3 rounded-xl border border-[#CBD5E1] text-xs outline-none focus:border-[#3B82F6]"
           />
           <PrimaryBtn small onClick={handleAdd} loading={adding}>
             <Save size={12} />
-            {adding ? "جاري الحفظ..." : "حفظ"}
+            {adding ? "ط·آ¬ط·آ§ط·آ±ط¸ظ¹ ط·آ§ط¸â€‍ط·آ­ط¸ظ¾ط·آ¸..." : "ط·آ­ط¸ظ¾ط·آ¸"}
           </PrimaryBtn>
           <GhostBtn small onClick={() => setShowAdd(false)}>
             <X size={12} />
-            إلغاء
+            ط·آ¥ط¸â€‍ط·ط›ط·آ§ط·طŒ
           </GhostBtn>
         </div>
       )}
@@ -456,9 +508,9 @@ function CategoriesTab({ canManage }: { canManage: boolean }) {
           <thead>
             <tr className="text-right text-[#64748B] border-b border-[#CBD5E1]">
               <th className="py-2.5 px-3 font-semibold">#</th>
-              <th className="py-2.5 px-3 font-semibold">اسم التصنيف</th>
-              <th className="py-2.5 px-3 font-semibold text-center">الحالة</th>
-              {canManage && <th className="py-2.5 px-3 font-semibold text-center">إجراءات</th>}
+              <th className="py-2.5 px-3 font-semibold">ط·آ§ط·آ³ط¸â€¦ ط·آ§ط¸â€‍ط·ع¾ط·آµط¸â€ ط¸ظ¹ط¸ظ¾</th>
+              <th className="py-2.5 px-3 font-semibold text-center">ط·آ§ط¸â€‍ط·آ­ط·آ§ط¸â€‍ط·آ©</th>
+              {canManage && <th className="py-2.5 px-3 font-semibold text-center">ط·آ¥ط·آ¬ط·آ±ط·آ§ط·طŒط·آ§ط·ع¾</th>}
             </tr>
           </thead>
           <tbody>
@@ -502,21 +554,21 @@ function CategoriesTab({ canManage }: { canManage: boolean }) {
                         : "bg-gray-100 text-[#64748B]"
                     }`}
                   >
-                    {cat.isActive ? "نشط" : "موقوف"}
+                    {cat.isActive ? "ط¸â€ ط·آ´ط·آ·" : "ط¸â€¦ط¸ث†ط¸â€ڑط¸ث†ط¸ظ¾"}
                   </span>
                 </td>
                 {canManage && (
                   <td className="py-2.5 px-3">
                     <div className="flex items-center justify-center gap-2">
                       <button
-                        title="تعديل الاسم"
+                        title="ط·ع¾ط·آ¹ط·آ¯ط¸ظ¹ط¸â€‍ ط·آ§ط¸â€‍ط·آ§ط·آ³ط¸â€¦"
                         onClick={() => { setEditId(cat.id); setEditName(cat.name); }}
                         className="p-1.5 rounded-lg hover:bg-blue-50 text-[#2563EB] border-none bg-transparent cursor-pointer transition-colors"
                       >
                         <Pencil size={13} />
                       </button>
                       <button
-                        title={cat.isActive ? "إيقاف التصنيف" : "تفعيل التصنيف"}
+                        title={cat.isActive ? "ط·آ¥ط¸ظ¹ط¸â€ڑط·آ§ط¸ظ¾ ط·آ§ط¸â€‍ط·ع¾ط·آµط¸â€ ط¸ظ¹ط¸ظ¾" : "ط·ع¾ط¸ظ¾ط·آ¹ط¸ظ¹ط¸â€‍ ط·آ§ط¸â€‍ط·ع¾ط·آµط¸â€ ط¸ظ¹ط¸ظ¾"}
                         onClick={() => handleToggle(cat)}
                         className={`p-1.5 rounded-lg border-none bg-transparent cursor-pointer transition-colors ${
                           cat.isActive
@@ -534,7 +586,7 @@ function CategoriesTab({ canManage }: { canManage: boolean }) {
             {categories.length === 0 && (
               <tr>
                 <td colSpan={4} className="py-8 text-center text-[#94A3B8]">
-                  لا توجد تصنيفات بعد
+                  ط¸â€‍ط·آ§ ط·ع¾ط¸ث†ط·آ¬ط·آ¯ ط·ع¾ط·آµط¸â€ ط¸ظ¹ط¸ظ¾ط·آ§ط·ع¾ ط·آ¨ط·آ¹ط·آ¯
                 </td>
               </tr>
             )}
@@ -545,7 +597,7 @@ function CategoriesTab({ canManage }: { canManage: boolean }) {
   );
 }
 
-// ─── Tab: Payment Methods ─────────────────────────────────────────────────────
+// أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬ Tab: Payment Methods أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬
 
 function PaymentTab({ canManage }: { canManage: boolean }) {
   const [methods, setMethods] = useState<string[]>([]);
@@ -559,7 +611,7 @@ function PaymentTab({ canManage }: { canManage: boolean }) {
     fetch("/api/settings/payment-methods")
       .then((r) => r.json())
       .then((d) => setMethods(d.methods ?? []))
-      .catch(() => setError("تعذّر تحميل طرق الدفع"))
+      .catch(() => setError("ط·ع¾ط·آ¹ط·آ°ط¸â€کط·آ± ط·ع¾ط·آ­ط¸â€¦ط¸ظ¹ط¸â€‍ ط·آ·ط·آ±ط¸â€ڑ ط·آ§ط¸â€‍ط·آ¯ط¸ظ¾ط·آ¹"))
       .finally(() => setLoading(false));
   }, []);
 
@@ -573,12 +625,12 @@ function PaymentTab({ canManage }: { canManage: boolean }) {
         body: JSON.stringify({ methods: updated }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "فشل حفظ طرق الدفع");
+      if (!res.ok) throw new Error(data.error || "ط¸ظ¾ط·آ´ط¸â€‍ ط·آ­ط¸ظ¾ط·آ¸ ط·آ·ط·آ±ط¸â€ڑ ط·آ§ط¸â€‍ط·آ¯ط¸ظ¾ط·آ¹");
       setMethods(data.methods ?? updated);
-      setSuccess("تم حفظ طرق الدفع بنجاح");
+      setSuccess("ط·ع¾ط¸â€¦ ط·آ­ط¸ظ¾ط·آ¸ ط·آ·ط·آ±ط¸â€ڑ ط·آ§ط¸â€‍ط·آ¯ط¸ظ¾ط·آ¹ ط·آ¨ط¸â€ ط·آ¬ط·آ§ط·آ­");
     } catch (e: unknown) {
       const err = e as Error;
-      setError(err?.message || "حدث خطأ");
+      setError(err?.message || "ط·آ­ط·آ¯ط·آ« ط·آ®ط·آ·ط·آ£");
     } finally {
       setSaving(false);
     }
@@ -587,18 +639,18 @@ function PaymentTab({ canManage }: { canManage: boolean }) {
   const handleAdd = () => {
     const trimmed = newMethod.trim();
     if (!trimmed) return;
-    if (methods.includes(trimmed)) { setError("طريقة الدفع موجودة بالفعل"); return; }
+    if (methods.includes(trimmed)) { setError("ط·آ·ط·آ±ط¸ظ¹ط¸â€ڑط·آ© ط·آ§ط¸â€‍ط·آ¯ط¸ظ¾ط·آ¹ ط¸â€¦ط¸ث†ط·آ¬ط¸ث†ط·آ¯ط·آ© ط·آ¨ط·آ§ط¸â€‍ط¸ظ¾ط·آ¹ط¸â€‍"); return; }
     const updated = [...methods, trimmed];
     setNewMethod("");
     save(updated);
   };
 
   const handleDelete = (m: string) => {
-    if (!confirm(`هل تريد حذف طريقة الدفع "${m}"؟`)) return;
+    if (!confirm(`ط¸â€،ط¸â€‍ ط·ع¾ط·آ±ط¸ظ¹ط·آ¯ ط·آ­ط·آ°ط¸ظ¾ ط·آ·ط·آ±ط¸ظ¹ط¸â€ڑط·آ© ط·آ§ط¸â€‍ط·آ¯ط¸ظ¾ط·آ¹ "${m}"ط·ع؛`)) return;
     save(methods.filter((x) => x !== m));
   };
 
-  if (loading) return <div className="p-8 text-center text-xs text-[#64748B]">جاري التحميل...</div>;
+  if (loading) return <div className="p-8 text-center text-xs text-[#64748B]">ط·آ¬ط·آ§ط·آ±ط¸ظ¹ ط·آ§ط¸â€‍ط·ع¾ط·آ­ط¸â€¦ط¸ظ¹ط¸â€‍...</div>;
 
   return (
     <div className="bg-white rounded-2xl border border-[#CBD5E1] shadow-sm p-6 space-y-4 max-w-md">
@@ -608,7 +660,7 @@ function PaymentTab({ canManage }: { canManage: boolean }) {
       {!canManage && (
         <div className="flex items-center gap-2 p-3 rounded-xl bg-amber-50 border border-amber-200 text-amber-700 text-xs font-semibold">
           <ShieldOff size={14} />
-          <span>عرض فقط — ليس لديك صلاحية تعديل طرق الدفع</span>
+          <span>ط·آ¹ط·آ±ط·آ¶ ط¸ظ¾ط¸â€ڑط·آ· أ¢â‚¬â€‌ ط¸â€‍ط¸ظ¹ط·آ³ ط¸â€‍ط·آ¯ط¸ظ¹ط¸ئ’ ط·آµط¸â€‍ط·آ§ط·آ­ط¸ظ¹ط·آ© ط·ع¾ط·آ¹ط·آ¯ط¸ظ¹ط¸â€‍ ط·آ·ط·آ±ط¸â€ڑ ط·آ§ط¸â€‍ط·آ¯ط¸ظ¾ط·آ¹</span>
         </div>
       )}
 
@@ -623,7 +675,7 @@ function PaymentTab({ canManage }: { canManage: boolean }) {
               <button
                 onClick={() => handleDelete(m)}
                 disabled={saving || methods.length <= 1}
-                title="حذف"
+                title="ط·آ­ط·آ°ط¸ظ¾"
                 className="p-1.5 rounded-lg hover:bg-red-50 text-red-400 border-none bg-transparent cursor-pointer transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 <Trash2 size={13} />
@@ -632,7 +684,7 @@ function PaymentTab({ canManage }: { canManage: boolean }) {
           </div>
         ))}
         {methods.length === 0 && (
-          <p className="text-xs text-[#94A3B8] text-center py-4">لا توجد طرق دفع</p>
+          <p className="text-xs text-[#94A3B8] text-center py-4">ط¸â€‍ط·آ§ ط·ع¾ط¸ث†ط·آ¬ط·آ¯ ط·آ·ط·آ±ط¸â€ڑ ط·آ¯ط¸ظ¾ط·آ¹</p>
         )}
       </div>
 
@@ -643,12 +695,12 @@ function PaymentTab({ canManage }: { canManage: boolean }) {
             value={newMethod}
             onChange={(e) => setNewMethod(e.target.value)}
             onKeyDown={(e) => { if (e.key === "Enter") handleAdd(); }}
-            placeholder="أضف طريقة دفع جديدة..."
+            placeholder="ط·آ£ط·آ¶ط¸ظ¾ ط·آ·ط·آ±ط¸ظ¹ط¸â€ڑط·آ© ط·آ¯ط¸ظ¾ط·آ¹ ط·آ¬ط·آ¯ط¸ظ¹ط·آ¯ط·آ©..."
             className="flex-1 py-2.5 px-3.5 rounded-xl border border-[#CBD5E1] text-xs outline-none focus:border-[#3B82F6]"
           />
           <PrimaryBtn small onClick={handleAdd} loading={saving} disabled={!newMethod.trim()}>
             <Plus size={13} />
-            إضافة
+            ط·آ¥ط·آ¶ط·آ§ط¸ظ¾ط·آ©
           </PrimaryBtn>
         </div>
       )}
@@ -656,7 +708,7 @@ function PaymentTab({ canManage }: { canManage: boolean }) {
   );
 }
 
-// ─── Tab: Change Password ─────────────────────────────────────────────────────
+// أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬ Tab: Change Password أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬
 
 function PasswordTab() {
   const [currentPassword, setCurrentPassword] = useState("");
@@ -672,11 +724,11 @@ function PasswordTab() {
     setPwSuccess(false);
 
     if (newPassword.length < 8) {
-      setPwError("كلمة المرور الجديدة 8 أحرف على الأقل");
+      setPwError("ط¸ئ’ط¸â€‍ط¸â€¦ط·آ© ط·آ§ط¸â€‍ط¸â€¦ط·آ±ط¸ث†ط·آ± ط·آ§ط¸â€‍ط·آ¬ط·آ¯ط¸ظ¹ط·آ¯ط·آ© 8 ط·آ£ط·آ­ط·آ±ط¸ظ¾ ط·آ¹ط¸â€‍ط¸â€° ط·آ§ط¸â€‍ط·آ£ط¸â€ڑط¸â€‍");
       return;
     }
     if (newPassword !== confirmPassword) {
-      setPwError("كلمتا المرور غير متطابقتين");
+      setPwError("ط¸ئ’ط¸â€‍ط¸â€¦ط·ع¾ط·آ§ ط·آ§ط¸â€‍ط¸â€¦ط·آ±ط¸ث†ط·آ± ط·ط›ط¸ظ¹ط·آ± ط¸â€¦ط·ع¾ط·آ·ط·آ§ط·آ¨ط¸â€ڑط·ع¾ط¸ظ¹ط¸â€ ");
       return;
     }
 
@@ -688,14 +740,14 @@ function PasswordTab() {
         body: JSON.stringify({ currentPassword, newPassword }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || "فشل تغيير كلمة المرور");
+      if (!res.ok) throw new Error(data.error || "ط¸ظ¾ط·آ´ط¸â€‍ ط·ع¾ط·ط›ط¸ظ¹ط¸ظ¹ط·آ± ط¸ئ’ط¸â€‍ط¸â€¦ط·آ© ط·آ§ط¸â€‍ط¸â€¦ط·آ±ط¸ث†ط·آ±");
       setPwSuccess(true);
       setCurrentPassword("");
       setNewPassword("");
       setConfirmPassword("");
     } catch (e: unknown) {
       const err = e as Error;
-      setPwError(err?.message || "حدث خطأ أثناء تغيير كلمة المرور");
+      setPwError(err?.message || "ط·آ­ط·آ¯ط·آ« ط·آ®ط·آ·ط·آ£ ط·آ£ط·آ«ط¸â€ ط·آ§ط·طŒ ط·ع¾ط·ط›ط¸ظ¹ط¸ظ¹ط·آ± ط¸ئ’ط¸â€‍ط¸â€¦ط·آ© ط·آ§ط¸â€‍ط¸â€¦ط·آ±ط¸ث†ط·آ±");
     } finally {
       setLoading(false);
     }
@@ -707,49 +759,49 @@ function PasswordTab() {
       {pwSuccess && (
         <Alert
           type="success"
-          message="تم تغيير كلمة المرور بنجاح! تم إنهاء الجلسات الأخرى للحماية."
+          message="ط·ع¾ط¸â€¦ ط·ع¾ط·ط›ط¸ظ¹ط¸ظ¹ط·آ± ط¸ئ’ط¸â€‍ط¸â€¦ط·آ© ط·آ§ط¸â€‍ط¸â€¦ط·آ±ط¸ث†ط·آ± ط·آ¨ط¸â€ ط·آ¬ط·آ§ط·آ­! ط·ع¾ط¸â€¦ ط·آ¥ط¸â€ ط¸â€،ط·آ§ط·طŒ ط·آ§ط¸â€‍ط·آ¬ط¸â€‍ط·آ³ط·آ§ط·ع¾ ط·آ§ط¸â€‍ط·آ£ط·آ®ط·آ±ط¸â€° ط¸â€‍ط¸â€‍ط·آ­ط¸â€¦ط·آ§ط¸ظ¹ط·آ©."
           onClose={() => setPwSuccess(false)}
         />
       )}
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <FieldLabel required>كلمة المرور الحالية</FieldLabel>
+          <FieldLabel required>ط¸ئ’ط¸â€‍ط¸â€¦ط·آ© ط·آ§ط¸â€‍ط¸â€¦ط·آ±ط¸ث†ط·آ± ط·آ§ط¸â€‍ط·آ­ط·آ§ط¸â€‍ط¸ظ¹ط·آ©</FieldLabel>
           <Input
             type="password"
             value={currentPassword}
             onChange={setCurrentPassword}
-            placeholder="••••••••"
+            placeholder="أ¢â‚¬آ¢أ¢â‚¬آ¢أ¢â‚¬آ¢أ¢â‚¬آ¢أ¢â‚¬آ¢أ¢â‚¬آ¢أ¢â‚¬آ¢أ¢â‚¬آ¢"
           />
         </div>
         <div>
-          <FieldLabel required>كلمة المرور الجديدة</FieldLabel>
+          <FieldLabel required>ط¸ئ’ط¸â€‍ط¸â€¦ط·آ© ط·آ§ط¸â€‍ط¸â€¦ط·آ±ط¸ث†ط·آ± ط·آ§ط¸â€‍ط·آ¬ط·آ¯ط¸ظ¹ط·آ¯ط·آ©</FieldLabel>
           <Input
             type="password"
             value={newPassword}
             onChange={setNewPassword}
-            placeholder="8 أحرف على الأقل"
+            placeholder="8 ط·آ£ط·آ­ط·آ±ط¸ظ¾ ط·آ¹ط¸â€‍ط¸â€° ط·آ§ط¸â€‍ط·آ£ط¸â€ڑط¸â€‍"
           />
         </div>
         <div>
-          <FieldLabel required>تأكيد كلمة المرور الجديدة</FieldLabel>
+          <FieldLabel required>ط·ع¾ط·آ£ط¸ئ’ط¸ظ¹ط·آ¯ ط¸ئ’ط¸â€‍ط¸â€¦ط·آ© ط·آ§ط¸â€‍ط¸â€¦ط·آ±ط¸ث†ط·آ± ط·آ§ط¸â€‍ط·آ¬ط·آ¯ط¸ظ¹ط·آ¯ط·آ©</FieldLabel>
           <Input
             type="password"
             value={confirmPassword}
             onChange={setConfirmPassword}
-            placeholder="••••••••"
+            placeholder="أ¢â‚¬آ¢أ¢â‚¬آ¢أ¢â‚¬آ¢أ¢â‚¬آ¢أ¢â‚¬آ¢أ¢â‚¬آ¢أ¢â‚¬آ¢أ¢â‚¬آ¢"
           />
         </div>
         <PrimaryBtn type="submit" loading={loading}>
           <Save size={14} />
-          {loading ? "جاري التحديث..." : "حفظ كلمة المرور"}
+          {loading ? "ط·آ¬ط·آ§ط·آ±ط¸ظ¹ ط·آ§ط¸â€‍ط·ع¾ط·آ­ط·آ¯ط¸ظ¹ط·آ«..." : "ط·آ­ط¸ظ¾ط·آ¸ ط¸ئ’ط¸â€‍ط¸â€¦ط·آ© ط·آ§ط¸â€‍ط¸â€¦ط·آ±ط¸ث†ط·آ±"}
         </PrimaryBtn>
       </form>
     </div>
   );
 }
 
-// ─── Main Page ────────────────────────────────────────────────────────────────
+// أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬ Main Page أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬أ¢â€‌â‚¬
 
 export default function SettingsPage() {
   const [user, setUser] = useState<UserProfile | null>(null);
@@ -764,8 +816,8 @@ export default function SettingsPage() {
   return (
     <div className="space-y-6 max-w-4xl" dir="rtl">
       <PageHeader
-        title="الإعدادات"
-        description="إدارة إعدادات الصيدلية والتصنيفات وطرق الدفع وكلمة المرور"
+        title="ط·آ§ط¸â€‍ط·آ¥ط·آ¹ط·آ¯ط·آ§ط·آ¯ط·آ§ط·ع¾"
+        description="ط·آ¥ط·آ¯ط·آ§ط·آ±ط·آ© ط·آ¥ط·آ¹ط·آ¯ط·آ§ط·آ¯ط·آ§ط·ع¾ ط·آ§ط¸â€‍ط·آµط¸ظ¹ط·آ¯ط¸â€‍ط¸ظ¹ط·آ© ط¸ث†ط·آ§ط¸â€‍ط·ع¾ط·آµط¸â€ ط¸ظ¹ط¸ظ¾ط·آ§ط·ع¾ ط¸ث†ط·آ·ط·آ±ط¸â€ڑ ط·آ§ط¸â€‍ط·آ¯ط¸ظ¾ط·آ¹ ط¸ث†ط¸ئ’ط¸â€‍ط¸â€¦ط·آ© ط·آ§ط¸â€‍ط¸â€¦ط·آ±ط¸ث†ط·آ±"
       />
 
       {/* Tab Bar */}

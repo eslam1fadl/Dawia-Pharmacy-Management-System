@@ -8,7 +8,7 @@ const fail = (message: string, status: number) => new Error(message, { cause: st
 // ────────────────────────────────────────────────────────────────────
 // Schemas
 // ────────────────────────────────────────────────────────────────────
-const ALLOWED_KEYS = ['pharmacy.name', 'pharmacy.phone', 'pharmacy.address', 'currency.symbol', 'date.format'] as const;
+const ALLOWED_KEYS = ['pharmacy.name', 'pharmacy.phone', 'pharmacy.address', 'pharmacy.logo', 'currency.symbol', 'date.format'] as const;
 type AllowedKey = (typeof ALLOWED_KEYS)[number];
 
 const updateSettingsSchema = z
@@ -16,6 +16,7 @@ const updateSettingsSchema = z
     'pharmacy.name': z.string().trim().min(1, 'اسم الصيدلية مطلوب').max(200).optional(),
     'pharmacy.phone': z.string().trim().max(30).optional(),
     'pharmacy.address': z.string().trim().max(500).optional(),
+    'pharmacy.logo': z.string().max(2097152).optional(), // base64 image ~2MB
     'currency.symbol': z.string().trim().min(1).max(10).optional(),
     'date.format': z.string().trim().min(1).max(20).optional(),
   })

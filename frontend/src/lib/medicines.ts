@@ -15,6 +15,9 @@ export interface Medicine {
   salePrice: number; // in piastres: 6500 = 65.00 EGP
   reorderLevel: number;
   defaultSupplierId: number | null;
+  saleUnit: string;
+  packUnit: string | null;
+  unitsPerPack: number;
   description: string | null;
   isActive: boolean;
   createdAt: string;
@@ -56,6 +59,10 @@ export interface MedicineFormData {
   purchasePrice: number; // in piastres
   salePrice: number; // in piastres
   reorderLevel: number;
+  defaultSupplierId?: number | null;
+  saleUnit?: string;
+  packUnit?: string;
+  unitsPerPack?: number;
   description?: string;
 }
 
@@ -90,14 +97,14 @@ export async function fetchMedicines(params?: {
   const res = await fetch(`/api/medicines?${query.toString()}`, { cache: "no-store" });
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
-    throw new Error(err.error || "فشل جلب قائمة الأدوية");
+    throw new Error(err.error || "خطأ في جلب الأدوية");
   }
   return res.json();
 }
 
 export async function fetchCategories(): Promise<Category[]> {
   const res = await fetch(`/api/medicines/categories`, { cache: "no-store" });
-  if (!res.ok) throw new Error("فشل جلب التصنيفات");
+  if (!res.ok) throw new Error("خطأ في جلب التصنيفات");
   const data = await res.json();
   return data.categories || [];
 }
@@ -111,7 +118,7 @@ export async function fetchMedicine(id: number): Promise<Medicine> {
 
 export async function fetchPriceHistory(id: number): Promise<PriceHistoryItem[]> {
   const res = await fetch(`/api/medicines/${id}/price-history`, { cache: "no-store" });
-  if (!res.ok) throw new Error("فشل جلب سجل الأسعار");
+  if (!res.ok) throw new Error("خطأ في جلب سجل الأسعار");
   const data = await res.json();
   return data.history || [];
 }
@@ -123,7 +130,7 @@ export async function createMedicine(data: MedicineFormData): Promise<Medicine> 
     body: JSON.stringify(data),
   });
   const resData = await res.json();
-  if (!res.ok) throw new Error(resData.error || "فشل إضافة الدواء");
+  if (!res.ok) throw new Error(resData.error || "خطأ في إضافة الدواء");
   return resData.medicine;
 }
 
@@ -134,7 +141,7 @@ export async function updateMedicine(id: number, data: Partial<MedicineFormData>
     body: JSON.stringify(data),
   });
   const resData = await res.json();
-  if (!res.ok) throw new Error(resData.error || "فشل تعديل الدواء");
+  if (!res.ok) throw new Error(resData.error || "خطأ في تعديل الدواء");
   return resData.medicine;
 }
 
@@ -143,7 +150,7 @@ export async function archiveMedicine(id: number): Promise<Medicine> {
     method: "PATCH",
   });
   const resData = await res.json();
-  if (!res.ok) throw new Error(resData.error || "فشل أرشفة الدواء");
+  if (!res.ok) throw new Error(resData.error || "خطأ في أرشفة الدواء");
   return resData.medicine;
 }
 
@@ -152,6 +159,6 @@ export async function restoreMedicine(id: number): Promise<Medicine> {
     method: "PATCH",
   });
   const resData = await res.json();
-  if (!res.ok) throw new Error(resData.error || "فشل استعادة الدواء");
+  if (!res.ok) throw new Error(resData.error || "خطأ في استعادة الدواء");
   return resData.medicine;
 }
